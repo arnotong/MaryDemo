@@ -115,9 +115,8 @@ class Main extends egret.DisplayObjectContainer {
      * Create a game scene
      */
     private createGameScene():void {
-        // 显示帧数
-       var rate:RateCenter = new RateCenter(true)
-       this.stage.addChild(rate)
-       rate.showRate()
+       // 初始化地图
+       var map:MapCenter = new MapCenter()
+       this.stage.addChild(map)
     }
 }
