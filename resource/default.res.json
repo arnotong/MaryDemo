@@ -1,0 +1,51 @@
+{
+	"groups": [
+		{
+			"keys": "bg_jpg,egret_icon_png,brick_png,map_json,skin_png,mary_person_png,mary_person_json,buttons",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/bg.jpg",
+			"type": "image",
+			"name": "bg_jpg"
+		},
+		{
+			"url": "assets/egret_icon.png",
+			"type": "image",
+			"name": "egret_icon_png"
+		},
+		{
+			"url": "assets/brick.png",
+			"type": "image",
+			"name": "brick_png"
+		},
+		{
+			"url": "config/map.json",
+			"type": "json",
+			"name": "map_json"
+		},
+		{
+			"url": "assets/skin.png",
+			"type": "image",
+			"name": "skin_png"
+		},
+		{
+			"url": "assets/mary_person.png",
+			"type": "image",
+			"name": "mary_person_png"
+		},
+		{
+			"url": "assets/mary_person.json",
+			"type": "json",
+			"name": "mary_person_json"
+		},
+		{
+			"url": "assets/buttons.json",
+			"type": "sheet",
+			"name": "buttons",
+			"subkeys": "down,left,right,super,top"
+		}
+	]
+}

@@ -1,0 +1,9 @@
+{
+  "skins": {
+    "skin.Buttons": "resource/eui_skins/ButtonSkin.exml"
+  },
+  "autoGenerateExmlsList": true,
+  "exmls": [
+    "resource/eui_skins/ButtonsSkin.exml"
+  ]
+}

@@ -1,0 +1,6 @@
+{"file":"buttons.png","frames":{
+"down":{"x":0,"y":96,"w":46,"h":46,"offX":1,"offY":1,"sourceW":48,"sourceH":48},
+"left":{"x":48,"y":48,"w":46,"h":46,"offX":1,"offY":1,"sourceW":48,"sourceH":48},
+"right":{"x":0,"y":48,"w":46,"h":46,"offX":1,"offY":1,"sourceW":48,"sourceH":48},
+"super":{"x":48,"y":0,"w":46,"h":46,"offX":1,"offY":1,"sourceW":48,"sourceH":48},
+"top":{"x":0,"y":0,"w":46,"h":46,"offX":1,"offY":1,"sourceW":48,"sourceH":48}}}
