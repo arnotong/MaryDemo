@@ -1,6 +1,7 @@
+
 //////////////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (c) 2014-present, Egret Technology.
+//  Copyright (c) 2014-2015, Egret Technology Inc.
 //  All rights reserved.
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -27,27 +28,28 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-class LoadingUI extends egret.Sprite {
-    private textField:egret.TextField
+module Common {
+    export class ThemeAdapter implements eui.IThemeAdapter {
 
-    public constructor() {
-        super()
-
-        this.createView()
-    }
-
-    private createView():void {
-        this.textField = new egret.TextField();
-
-        this.textField.width = egret.MainContext.instance.stage.stageWidth
-        this.textField.height = 30
-        this.textField.y = (egret.MainContext.instance.stage.stageHeight - this.textField.height) / 2
-        this.textField.textAlign = "center"
-
-        this.addChild(this.textField)
-    }
-
-    public setProgress(current:number, total:number):void {
-        this.textField.text = `Loading...${current}/${total}`
+        /**
+         * 解析主题
+         * @param url 待解析的主题url
+         * @param compFunc 解析完成回调函数，示例：compFunc(e:egret.Event):void;
+         * @param errorFunc 解析失败回调函数，示例：errorFunc():void;
+         * @param thisObject 回调的this引用
+         */
+        public getTheme(url:string,compFunc:Function,errorFunc:Function,thisObject:any):void {
+            function onGetRes(e:string):void {
+                compFunc.call(thisObject, e);
+            }
+            function onError(e:RES.ResourceEvent):void {
+                if(e.resItem.url == url) {
+                    RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, onError, null);
+                    errorFunc.call(thisObject);
+                }
+            }
+            RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, onError, null);
+            RES.getResByUrl(url, onGetRes, this, RES.ResourceItem.TYPE_TEXT);
+        }
     }
 }

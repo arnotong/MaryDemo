@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (c) 2014-present, Egret Technology.
+//  Copyright (c) 2014-2015, Egret Technology Inc.
 //  All rights reserved.
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -27,27 +27,31 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-class LoadingUI extends egret.Sprite {
-    private textField:egret.TextField
-
-    public constructor() {
-        super()
-
-        this.createView()
-    }
-
-    private createView():void {
-        this.textField = new egret.TextField();
-
-        this.textField.width = egret.MainContext.instance.stage.stageWidth
-        this.textField.height = 30
-        this.textField.y = (egret.MainContext.instance.stage.stageHeight - this.textField.height) / 2
-        this.textField.textAlign = "center"
-
-        this.addChild(this.textField)
-    }
-
-    public setProgress(current:number, total:number):void {
-        this.textField.text = `Loading...${current}/${total}`
+module Common {
+    export class AssetAdapter implements eui.IAssetAdapter {
+        /**
+         * @language zh_CN
+         * 解析素材
+         * @param source 待解析的新素材标识符
+         * @param compFunc 解析完成回调函数，示例：callBack(content:any,source:string):void;
+         * @param thisObject callBack的 this 引用
+         */
+        public getAsset(source: string, compFunc:Function, thisObject: any): void {
+            function onGetRes(data: any): void {
+                compFunc.call(thisObject, data, source);
+            }
+            if (RES.hasRes(source)) {
+                var data = RES.getRes(source);
+                if (data) {
+                    onGetRes(data);
+                }
+                else {
+                    RES.getResAsync(source, onGetRes, this);
+                }
+            }
+            else {
+                RES.getResByUrl(source, onGetRes, this, RES.ResourceItem.TYPE_IMAGE);
+            }
+        }
     }
 }

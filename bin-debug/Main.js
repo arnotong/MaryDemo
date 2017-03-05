@@ -26,29 +26,36 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-
-class Main extends eui.UILayer {
-
-    /**
-     * 加载进度界面
-     * Process interface loading
-     */
-    private loadingView:LoadingUI = null
-
-    public createChildren():void {
-        super.createChildren()
-
+var __reflect = (this && this.__reflect) || function (p, c, t) {
+    p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
+};
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var Main = (function (_super) {
+    __extends(Main, _super);
+    function Main() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        /**
+         * 加载进度界面
+         * Process interface loading
+         */
+        _this.loadingView = null;
+        return _this;
+    }
+    Main.prototype.createChildren = function () {
+        _super.prototype.createChildren.call(this);
         //inject the custom material parser
         //注入自定义的素材解析器
-        this.stage.registerImplementation("eui.IAssetAdapter", new Common.AssetAdapter())
-        this.stage.registerImplementation("eui.IThemeAdapter",new Common.ThemeAdapter)
-
+        this.stage.registerImplementation("eui.IAssetAdapter", new Common.AssetAdapter());
+        this.stage.registerImplementation("eui.IThemeAdapter", new Common.ThemeAdapter);
         //设置加载进度界面
-        this.loadingView = new LoadingUI()
-        this.stage.addChild(this.loadingView)
-
+        this.loadingView = new LoadingUI();
+        this.stage.addChild(this.loadingView);
         //初始化Resource资源加载库
-         new Common.MultiLoadConf({
+        new Common.MultiLoadConf({
             complete: this.resLoadComplete.bind(this),
             res: [
                 {
@@ -62,31 +69,30 @@ class Main extends eui.UILayer {
                     boot: this.stage
                 }
             ]
-        })
-    }
-
+        });
+    };
     /**
      * 全部资源加载完成
      */
-    private resLoadComplete(event:RES.ResourceEvent):void {
-        this.stage.removeChild(this.loadingView)
-        
-        this.createGameScene()
-    }
-
+    Main.prototype.resLoadComplete = function (event) {
+        this.stage.removeChild(this.loadingView);
+        this.createGameScene();
+    };
     /**
      * preload资源组加载进度
      * Loading process of preload resource group
      */
-    private onResourceProgress(event:RES.ResourceEvent):void {
-        this.loadingView.setProgress(event.itemsLoaded, event.itemsTotal)
-    }
-
+    Main.prototype.onResourceProgress = function (event) {
+        this.loadingView.setProgress(event.itemsLoaded, event.itemsTotal);
+    };
     /**
      * 创建游戏场景
      * Create a game scene
      */
-    private createGameScene():void {
-       this.stage.addChild(new Assembly())
-    }
-}
+    Main.prototype.createGameScene = function () {
+        this.stage.addChild(new Assembly());
+    };
+    return Main;
+}(eui.UILayer));
+__reflect(Main.prototype, "Main");
+//# sourceMappingURL=Main.js.map

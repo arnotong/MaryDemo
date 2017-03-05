@@ -26,28 +26,33 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-
-class LoadingUI extends egret.Sprite {
-    private textField:egret.TextField
-
-    public constructor() {
-        super()
-
-        this.createView()
+var __reflect = (this && this.__reflect) || function (p, c, t) {
+    p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
+};
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var LoadingUI = (function (_super) {
+    __extends(LoadingUI, _super);
+    function LoadingUI() {
+        var _this = _super.call(this) || this;
+        _this.createView();
+        return _this;
     }
-
-    private createView():void {
+    LoadingUI.prototype.createView = function () {
         this.textField = new egret.TextField();
-
-        this.textField.width = egret.MainContext.instance.stage.stageWidth
-        this.textField.height = 30
-        this.textField.y = (egret.MainContext.instance.stage.stageHeight - this.textField.height) / 2
-        this.textField.textAlign = "center"
-
-        this.addChild(this.textField)
-    }
-
-    public setProgress(current:number, total:number):void {
-        this.textField.text = `Loading...${current}/${total}`
-    }
-}
+        this.textField.width = egret.MainContext.instance.stage.stageWidth;
+        this.textField.height = 30;
+        this.textField.y = (egret.MainContext.instance.stage.stageHeight - this.textField.height) / 2;
+        this.textField.textAlign = "center";
+        this.addChild(this.textField);
+    };
+    LoadingUI.prototype.setProgress = function (current, total) {
+        this.textField.text = "Loading..." + current + "/" + total;
+    };
+    return LoadingUI;
+}(egret.Sprite));
+__reflect(LoadingUI.prototype, "LoadingUI");
+//# sourceMappingURL=LoadingUI.js.map
