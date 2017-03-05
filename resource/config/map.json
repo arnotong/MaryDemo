@@ -1,27 +1,42 @@
-[
-    {
-        "w": 2,
-        "h": 2,
-        "land": true
-    },
-    {
-        "w": 2,
-        "h": 2,
-        "land": false
-    },
-    {
-        "w": 4,
-        "h": 2,
-        "land": true
-    },
-    {
-        "w": 1,
-        "h": 2,
-        "land": false
-    },
-    {
-        "w": 4,
-        "h": 2,
-        "land": true
+{
+    "brick": {
+        "height": 60,
+        "data": [
+            {
+                "w": 2,
+                "h": 2,
+                "land": true
+            },
+            {
+                "w": 2,
+                "h": 2,
+                "land": false
+            },
+            {
+                "w": 4,
+                "h": 2,
+                "land": true
+            },
+            {
+                "w": 1,
+                "h": 2,
+                "land": false
+            },
+            {
+                "w": 10,
+                "h": 2,
+                "land": true
+            },
+            {
+                "w": 5,
+                "h": 2,
+                "land": false
+            },
+            {
+                "w": 20,
+                "h": 2,
+                "land": true
+            }
+        ]
     }
-]
+}

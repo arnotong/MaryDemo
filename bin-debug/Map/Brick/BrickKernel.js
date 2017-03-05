@@ -6,42 +6,41 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var BrickCenter = (function (_super) {
-    __extends(BrickCenter, _super);
-    function BrickCenter() {
+var BrickKernel = (function (_super) {
+    __extends(BrickKernel, _super);
+    function BrickKernel(brickData) {
         var _this = _super.call(this) || this;
         _this.texture = null;
+        _this.brickData = null;
+        _this.brickData = brickData;
         _this.initBrick();
         return _this;
     }
-    BrickCenter.prototype.setBrickPos = function () {
-        this.height = 60;
+    BrickKernel.prototype.setBrickPos = function () {
+        this.height = this.brickData.height;
         this.x = 0;
         this.y = egret.MainContext.instance.stage.stageHeight - this.height;
     };
-    BrickCenter.prototype.setTexture = function (func) {
+    BrickKernel.prototype.setTexture = function (func) {
         var _this = this;
-        this.texture = new LoadTexture('/resource/assets/brick.png', function (_) {
+        this.texture = new LoadTexture('brick_png', function (_) {
             func.call(_this);
         });
     };
-    BrickCenter.prototype.initBrick = function () {
+    BrickKernel.prototype.initBrick = function () {
         var _this = this;
         this.setBrickPos();
         this.setTexture(function (bitmap) {
-            _this.getMapJson();
+            _this.setBricks();
         });
     };
-    BrickCenter.prototype.getMapJson = function () {
-        RES.getResAsync('map_json', this.setBricks, this);
-    };
-    BrickCenter.prototype.setBricks = function (mapsJson) {
+    BrickKernel.prototype.setBricks = function () {
         var _this = this;
         var bitmap = this.texture.getBitmap();
         var width = bitmap.width;
         var height = bitmap.height;
         var preEndX = 0;
-        mapsJson.forEach(function (map) {
+        this.brickData.data.forEach(function (map) {
             if (map.land) {
                 var brick = new Brick(map.w, map.h, preEndX, 0);
                 _this.addChild(brick);
@@ -49,7 +48,6 @@ var BrickCenter = (function (_super) {
             preEndX = map.w * width + preEndX;
         });
     };
-    return BrickCenter;
+    return BrickKernel;
 }(egret.DisplayObjectContainer));
-__reflect(BrickCenter.prototype, "BrickCenter");
-//# sourceMappingURL=BrickCenter.js.map
+__reflect(BrickKernel.prototype, "BrickKernel");

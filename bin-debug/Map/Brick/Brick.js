@@ -56,4 +56,3 @@ var Brick = (function (_super) {
     return Brick;
 }(egret.DisplayObjectContainer));
 __reflect(Brick.prototype, "Brick");
-//# sourceMappingURL=Brick.js.map

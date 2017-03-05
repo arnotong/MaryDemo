@@ -6,12 +6,17 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var PersonCenter = (function (_super) {
-    __extends(PersonCenter, _super);
-    function PersonCenter() {
-        return _super.call(this) || this;
+var TextureBitmap = (function (_super) {
+    __extends(TextureBitmap, _super);
+    function TextureBitmap(resName) {
+        var _this = _super.call(this) || this;
+        _this.bitmap = null;
+        _this.bitmap = new egret.Bitmap(RES.getRes(resName));
+        return _this;
     }
-    return PersonCenter;
+    TextureBitmap.prototype.getBitmap = function () {
+        return this.bitmap;
+    };
+    return TextureBitmap;
 }(egret.Sprite));
-__reflect(PersonCenter.prototype, "PersonCenter");
-//# sourceMappingURL=PersonCenter.js.map
+__reflect(TextureBitmap.prototype, "TextureBitmap");
