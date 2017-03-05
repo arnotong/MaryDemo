@@ -1,2 +1,0 @@
-# MaryDemo
-egret project
