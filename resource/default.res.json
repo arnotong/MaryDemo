@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "bg_jpg,egret_icon_png,description_json,brick_png,brick2_png,map_json,map2_json,skin_png,mary_person_json",
+			"keys": "bg_jpg,egret_icon_png,description_json,brick_png,brick2_png,map_json,map2_json",
 			"name": "preload"
 		}
 	],
@@ -40,17 +40,6 @@
 			"name": "map2_json",
 			"type": "json",
 			"url": "config/map.json"
-		},
-		{
-			"name": "skin_png",
-			"type": "image",
-			"url": "assets/skin.png"
-		},
-		{
-			"name": "mary_person_json",
-			"type": "sheet",
-			"url": "assets/mary_person.json",
-			"subkeys": "mary_1_png,mary_2_png,mary_3_png,mary_4_png,mary_5_png,mary_6_png"
 		}
 	]
 }

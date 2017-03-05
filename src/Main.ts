@@ -37,7 +37,6 @@ class Main extends egret.DisplayObjectContainer {
 
     public constructor() {
         super();
-
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
 
@@ -77,7 +76,7 @@ class Main extends egret.DisplayObjectContainer {
             RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
             RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
             RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
-            this.createGameScene()
+            this.createGameScene();
         }
     }
 
@@ -116,6 +115,8 @@ class Main extends egret.DisplayObjectContainer {
      * Create a game scene
      */
     private createGameScene():void {
-       this.stage.addChild(new Assembly())
+       // 初始化地图
+       var map:MapCenter = new MapCenter()
+       this.stage.addChild(map)
     }
 }

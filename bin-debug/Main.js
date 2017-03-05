@@ -109,8 +109,11 @@ var Main = (function (_super) {
      * Create a game scene
      */
     Main.prototype.createGameScene = function () {
-        this.stage.addChild(new Assembly());
+        // 初始化地图
+        var map = new MapCenter();
+        this.stage.addChild(map);
     };
     return Main;
 }(egret.DisplayObjectContainer));
 __reflect(Main.prototype, "Main");
+//# sourceMappingURL=Main.js.map

@@ -7,16 +7,13 @@ var game_file_list = [
 	"libs/modules/game/game.js",
 	"libs/modules/res/res.js",
 	"libs/modules/tween/tween.js",
-	"bin-debug/Assembly/Assembly.js",
 	"bin-debug/Common/LoadTexture.js",
-	"bin-debug/Common/TextureBitmap.js",
 	"bin-debug/LoadingUI.js",
 	"bin-debug/Main.js",
 	"bin-debug/Map/Brick/Brick.js",
-	"bin-debug/Map/Brick/BrickKernel.js",
-	"bin-debug/Map/MapKernel.js",
-	"bin-debug/Person/Mary/BitMary.js",
-	"bin-debug/Person/PersonKernel.js",
+	"bin-debug/Map/Brick/BrickCenter.js",
+	"bin-debug/Map/Map.js",
+	"bin-debug/Person/PersonCenter.js",
 	//----auto game_file_list end----
 ];
 
@@ -51,8 +48,8 @@ egret_native.egretStart = function () {
         //----auto option start----
 		entryClassName: "Main",
 		frameRate: 30,
-		scaleMode: "fixedWidth",
-		contentWidth: 960,
+		scaleMode: "noBorder",
+		contentWidth: 480,
 		contentHeight: 800,
 		showPaintRect: false,
 		showFPS: true,
