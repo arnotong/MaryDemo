@@ -1,10 +1,10 @@
-module Common {
+namespace Common {
     export class KeyEvent {
         public static TYPE = {
             'LEFT': 'ArrowLeft',
             'RIGHT': 'ArrowRight',
-            'TOP': 'ArrowTop',
-            'BOTTOM': 'ArrowBottom',
+            'UP': 'ArrowTop',
+            'DOWN': 'ArrowBottom',
             'SPACE': 'Space'
         }
 

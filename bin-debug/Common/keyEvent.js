@@ -27,8 +27,8 @@ var Common;
     KeyEvent.TYPE = {
         'LEFT': 'ArrowLeft',
         'RIGHT': 'ArrowRight',
-        'TOP': 'ArrowTop',
-        'BOTTOM': 'ArrowBottom',
+        'UP': 'ArrowTop',
+        'DOWN': 'ArrowBottom',
         'SPACE': 'Space'
     };
     Common.KeyEvent = KeyEvent;

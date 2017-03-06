@@ -12,20 +12,30 @@ var Assembly = (function (_super) {
         var _this = _super.call(this) || this;
         _this.map = null;
         _this.person = null;
+        _this.control = null;
         _this.init();
         return _this;
     }
     Assembly.prototype.init = function () {
         this.initMap();
         this.initPerson();
+        this.initControlPanel();
+        this.registerController();
     };
     Assembly.prototype.initMap = function () {
-        this.map = new Map.MapKernel();
+        this.map = new Models.Map.MapKernel();
         this.addChild(this.map);
     };
     Assembly.prototype.initPerson = function () {
-        this.person = new Person.PersonKernel();
+        this.person = new Models.Person.PersonKernel();
         this.addChild(this.person);
+    };
+    Assembly.prototype.initControlPanel = function () {
+        this.control = new Views.ControlPanel();
+        this.addChild(this.control);
+    };
+    Assembly.prototype.registerController = function () {
+        new Controller.PersonControll(this.person, this.map);
     };
     return Assembly;
 }(egret.Sprite));

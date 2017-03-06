@@ -27,7 +27,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-module Common {
+namespace Common {
     export class AssetAdapter implements eui.IAssetAdapter {
         /**
          * @language zh_CN

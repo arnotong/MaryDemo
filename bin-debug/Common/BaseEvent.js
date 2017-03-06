@@ -5,19 +5,20 @@ var Common;
 (function (Common) {
     var BaseEvent = (function () {
         function BaseEvent() {
-            // 点击事件
-            this.DIR_LEFT = 'dir_left_event';
-            this.DIR_RIGHT = 'dir_right_event';
-            this.DIR_TOP = 'dir_top_event';
-            this.DIR_BOTTOM = 'dir_bottom_event';
-            // 点击事件回调
-            this.DIR_LEFT_CB = 'dir_left_event_callback';
-            this.DIR_RIGHT_CB = 'dir_right_event_callback';
-            this.DIR_TOP_CB = 'dir_top_event_callback';
-            this.DIR_BOTTOM_CB = 'dir_bottom_event_callback';
         }
         return BaseEvent;
     }());
+    // 点击事件
+    BaseEvent.DIR_LEFT = new egret.Event('dir_left_event');
+    BaseEvent.DIR_RIGHT = new egret.Event('dir_right_event');
+    BaseEvent.DIR_UP = new egret.Event('dir_up_event');
+    BaseEvent.DIR_DOWN = new egret.Event('dir_down_event');
+    BaseEvent.DIR_SUPER = new egret.Event('dir_super_event');
+    BaseEvent.DIR_LEFT_END = new egret.Event('dir_left_end_event');
+    BaseEvent.DIR_RIGHT_END = new egret.Event('dir_right_end_event');
+    BaseEvent.DIR_UP_END = new egret.Event('dir_up_end_event');
+    BaseEvent.DIR_DOWN_END = new egret.Event('dir_down_end_event');
+    BaseEvent.DIR_SUPER_END = new egret.Event('dir_super_end_event');
     Common.BaseEvent = BaseEvent;
     __reflect(BaseEvent.prototype, "Common.BaseEvent");
 })(Common || (Common = {}));

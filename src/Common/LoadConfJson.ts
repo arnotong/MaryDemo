@@ -16,7 +16,7 @@ module Common {
         }
 
         public static addConfComplete(func):void {
-            if (!func) return 
+            if (!func) return
 
             this.confListenerFuncs = this.confListenerFuncs.concat([func])
 
