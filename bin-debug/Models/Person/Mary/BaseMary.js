@@ -24,12 +24,12 @@ var Models;
                     _this.upMovieClip = null;
                     _this.downMovieClip = null;
                     // 各个方向的速度
-                    _this.leftSpeed = 10;
-                    _this.rightSpeed = 10;
+                    _this.leftSpeed = new Mary.MarySpeed();
+                    _this.rightSpeed = new Mary.MarySpeed();
                     _this.upSpeed = 2;
                     _this.downSpeed = 2;
-                    // this.setRightMovieClip()
                     _this.initAllMovieClip();
+                    _this.movieClip = _this.rightMovieClip;
                     return _this;
                 }
                 /**
@@ -86,44 +86,78 @@ var Models;
                 BaseMary.prototype.setDownMovieClip = function () {
                     this.setMovieClipData(this.downMovieClip);
                 };
+                BaseMary.prototype.gotoAndPlay = function (frame, round) {
+                    if (frame === void 0) { frame = 1; }
+                    if (round === void 0) { round = -1; }
+                    if (!this.movieClip.isPlaying) {
+                        this.movieClip.gotoAndPlay(frame, round);
+                    }
+                };
+                BaseMary.prototype.gotoAndStop = function (frame) {
+                    if (frame === void 0) { frame = 1; }
+                    if (this.movieClip.isPlaying) {
+                        this.movieClip.gotoAndStop(frame);
+                    }
+                };
                 /**
                  * 向左走
                  */
-                BaseMary.prototype.walkLeft = function () {
+                BaseMary.prototype.left = function (event) {
+                    this.setLeftMovieClip();
+                    this.x -= this.leftSpeed.getSpeed();
+                    this.gotoAndPlay();
                 };
                 /**
                  * 向右走
                  */
-                BaseMary.prototype.walkRight = function () {
-                    this.x += this.rightSpeed;
-                    this.movieClip.gotoAndPlay(1, -1);
-                };
-                /**
-                 * 向左跑
-                 */
-                BaseMary.prototype.runLeft = function () {
-                };
-                /**
-                 * 向右跑
-                 */
-                BaseMary.prototype.runRight = function () {
+                BaseMary.prototype.right = function (event) {
+                    this.setRightMovieClip();
+                    this.x += this.rightSpeed.getSpeed();
+                    this.gotoAndPlay();
                 };
                 /**
                  * 跳
                  */
-                BaseMary.prototype.jump = function () {
+                BaseMary.prototype.jump = function (event) {
                 };
                 /**
-                 * 向下钻
+                 * 向下钻/蹲下
                  */
-                BaseMary.prototype.toDrill = function () {
+                BaseMary.prototype.drill = function (event) {
                 };
                 /**
-                 * 停止
+                 * 子弹
                  */
-                BaseMary.prototype.stopClip = function (frame) {
-                    var frameTmp = frame || 1;
-                    this.movieClip.gotoAndStop(frameTmp);
+                BaseMary.prototype.super = function (event) {
+                };
+                /**
+                 * 停止 向左走
+                 */
+                BaseMary.prototype.stopLeft = function (event) {
+                    this.gotoAndStop();
+                    this.leftSpeed.init();
+                };
+                /**
+                 * 停止 向右走
+                 */
+                BaseMary.prototype.stopRight = function (event) {
+                    this.gotoAndStop();
+                    this.rightSpeed.init();
+                };
+                /**
+                 * 停止 跳跃
+                 */
+                BaseMary.prototype.stopJump = function (event) {
+                };
+                /**
+                 * 停止 蹲下
+                 */
+                BaseMary.prototype.stopDrill = function (event) {
+                };
+                /**
+                 * 停止 子弹
+                 */
+                BaseMary.prototype.stopSuper = function (event) {
                 };
                 return BaseMary;
             }(egret.Sprite));
@@ -132,4 +166,3 @@ var Models;
         })(Mary = Person.Mary || (Person.Mary = {}));
     })(Person = Models.Person || (Models.Person = {}));
 })(Models || (Models = {}));
-//# sourceMappingURL=BaseMary.js.map

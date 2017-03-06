@@ -4,41 +4,56 @@ namespace Models.Person.Mary {
         /**
          * 向左走
          */
-        walkLeft()
+        left(event?:egret.Event)
 
         /**
          * 向右走
          */
-        walkRight()
-
-        /**
-         * 向左跑
-         */
-        runLeft()
-
-        /**
-         * 向右跑
-         */
-        runRight()
+        right(event?:egret.Event)
 
         /**
          * 跳
          */
-        jump()
+        jump(event?:egret.Event)
 
         /**
-         * 向下钻
+         * 向下钻/蹲下
          */
-        toDrill()
+        drill(event?:egret.Event)
 
         /**
-         * 停止
+         * 子弹按钮
          */
-        stopClip()
+        super(event?:egret.Event)
+
+        /**
+         * 停止 向左走
+         */
+        stopLeft(event?:egret.Event)
+
+        /**
+         * 停止 向右走
+         */
+        stopRight(event?:egret.Event)
+
+        /**
+         * 停止 跳跃
+         */
+        stopJump(event?:egret.Event)
+
+        /**
+         * 停止 蹲下
+         */
+        stopDrill(event?:egret.Event)
+
+        /**
+         * 停止 子弹
+         */
+        stopSuper(event?:egret.Event)
 
         /**
          * 获取高度
          */
-        getHeight()
+        getHeight(event?:egret.Event)
     }
 }

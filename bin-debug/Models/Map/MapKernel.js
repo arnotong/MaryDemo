@@ -49,4 +49,3 @@ var Models;
         __reflect(MapKernel.prototype, "Models.Map.MapKernel");
     })(Map = Models.Map || (Models.Map = {}));
 })(Models || (Models = {}));
-//# sourceMappingURL=MapKernel.js.map

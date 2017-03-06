@@ -10,19 +10,17 @@ module Models.Person.Mary {
         protected downMovieClip:egret.MovieClip = null
 
         // 各个方向的速度
-        protected leftSpeed:number = 10
-        protected rightSpeed:number = 10
+        protected leftSpeed:MarySpeed = new MarySpeed()
+        protected rightSpeed:MarySpeed = new MarySpeed()
         protected upSpeed:number = 2
         protected downSpeed:number = 2
-
-        // 定时跑动 flag
-        protected timeRunFlag = false
 
         public constructor() {
             super()
 
-            // this.setRightMovieClip()
             this.initAllMovieClip()
+            
+            this.movieClip = this.rightMovieClip
         }
 
         /**
@@ -88,64 +86,94 @@ module Models.Person.Mary {
             this.setMovieClipData(this.downMovieClip)
         }
 
-        /**
-         * 设置 连续动作
-         */
-        private timeRun(func:Function):void {
-            if (this.timeRunFlag) {
-                
+        protected gotoAndPlay(frame:number = 1, round:number = -1) {
+            if (!this.movieClip.isPlaying) {
+                this.movieClip.gotoAndPlay(frame, round)
+            }
+        }
+
+        protected gotoAndStop(frame:number | string = 1) {
+            if (this.movieClip.isPlaying) {
+                this.movieClip.gotoAndStop(frame)
             }
         }
 
         /**
          * 向左走
          */
-        public walkLeft() {
+        public left(event?:egret.Event) {
+            this.setLeftMovieClip()
 
+            this.x -= this.leftSpeed.getSpeed()
+            this.gotoAndPlay()
         }
 
         /**
          * 向右走
          */
-        public walkRight() {
-            this.x += this.rightSpeed
-            this.movieClip.gotoAndPlay(1, -1)
-        }
+        public right(event?:egret.Event) {
+            this.setRightMovieClip()
 
-        /**
-         * 向左跑
-         */
-        public runLeft() {
-
-        }
-
-        /**
-         * 向右跑
-         */
-        public runRight() {
-
+            this.x += this.rightSpeed.getSpeed()
+            this.gotoAndPlay()
         }
 
         /**
          * 跳
          */
-        public jump() {
+        public jump(event?:egret.Event) {
 
         }
 
         /**
-         * 向下钻
+         * 向下钻/蹲下
          */
-        public toDrill() {
+        public drill(event?:egret.Event) {
 
         }
 
         /**
-         * 停止
+         * 子弹
          */
-        public stopClip(frame?:any) {
-            let frameTmp = frame || 1
-            this.movieClip.gotoAndStop(frameTmp)
+        public super(event?:egret.Event) {
+
+        }
+
+        /**
+         * 停止 向左走
+         */
+        public stopLeft(event?:egret.Event) {
+            this.gotoAndStop()
+            this.leftSpeed.init()
+        }
+
+        /**
+         * 停止 向右走
+         */
+        public stopRight(event?:egret.Event) {
+            this.gotoAndStop()
+            this.rightSpeed.init()
+        }
+
+        /**
+         * 停止 跳跃
+         */
+        public stopJump(event?:egret.Event) {
+
+        }
+
+        /**
+         * 停止 蹲下
+         */
+        public stopDrill(event?:egret.Event) {
+
+        }
+
+        /**
+         * 停止 子弹
+         */
+        public stopSuper(event?:egret.Event) {
+
         }
     }
 }

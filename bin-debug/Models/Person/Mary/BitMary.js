@@ -22,55 +22,19 @@ var Models;
                 }
                 BitMary.prototype.initMary = function () {
                     this.setSize();
-                    this.movieClip = this.rightMovieClip;
-                    this.addChild(this.movieClip);
+                    this.movieClip && this.addChild(this.movieClip);
                 };
                 BitMary.prototype.setSize = function () {
                     this.width = 32;
                     this.height = 64;
                 };
+                /**
+                 * 重写
+                 * 初始化各个方向的动画
+                 */
                 BitMary.prototype.initAllMovieClip = function () {
-                    this.leftMovieClip = null;
-                    this.rightMovieClip = this.getMovieClipData(RES.getRes('mary_person_json'), RES.getRes('mary_person_png'), 'mary_person_right');
-                };
-                /**
-                 * 向左走
-                 */
-                BitMary.prototype.walkLeft = function () {
-                };
-                /**
-                 * 向右走
-                 */
-                BitMary.prototype.walkRight = function () {
-                    this.setRightMovieClip();
-                    _super.prototype.walkRight.call(this);
-                };
-                /**
-                 * 向左跑
-                 */
-                BitMary.prototype.runLeft = function () {
-                };
-                /**
-                 * 向右跑
-                 */
-                BitMary.prototype.runRight = function () {
-                };
-                /**
-                 * 跳
-                 */
-                BitMary.prototype.jump = function () {
-                };
-                /**
-                 * 向下钻
-                 */
-                BitMary.prototype.toDrill = function () {
-                };
-                /**
-                 * 停止
-                 */
-                BitMary.prototype.stopClip = function () {
-                    console.log('-------- stop');
-                    _super.prototype.stopClip.call(this);
+                    this.leftMovieClip = this.getMovieClipData(RES.getRes('mary_big_left_json'), RES.getRes('mary_big_left_png'), 'mary_big_left');
+                    this.rightMovieClip = this.getMovieClipData(RES.getRes('mary_big_right_json'), RES.getRes('mary_big_right_png'), 'mary_big_right');
                 };
                 return BitMary;
             }(Mary.BaseMary));
@@ -79,4 +43,3 @@ var Models;
         })(Mary = Person.Mary || (Person.Mary = {}));
     })(Person = Models.Person || (Models.Person = {}));
 })(Models || (Models = {}));
-//# sourceMappingURL=BitMary.js.map

@@ -18,5 +18,11 @@ namespace Common {
         // public static DIR_RIGHT_CB:egret.Event = new egret.Event('dir_right_event_callback')
         // public static DIR_TOP_CB:egret.Event = new egret.Event('dir_top_event_callback')
         // public static DIR_BOTTOM_CB:egret.Event = new egret.Event('dir_bottom_event_callback')
+
+
+        public static getEvent(name:string) {
+            let key = Object.keys(BaseEvent).filter(key => this[key].type === name)[0]
+            return this[key]
+        }
     }
 }

@@ -26,50 +26,57 @@ namespace Models.Person {
         /**
          * 向左走
          */
-        public walkLeft():void {
-
+        public left():void {
+            this.maryObj.left()
         }
 
         /**
          * 向右走
          */
-        public walkRight() {
-            this.maryObj.walkRight()
-        }
-
-        /**
-         * 向左跑
-         */
-        public runLeft() {
-
-        }
-
-        /**
-         * 向右跑
-         */
-        public runRight() {
-
+        public right() {
+            this.maryObj.right()
         }
 
         /**
          * 跳
          */
         public jump() {
-
+            this.maryObj.jump()
         }
 
         /**
          * 向下钻
          */
-        public toDrill() {
-
+        public drill() {
+            this.maryObj.drill()
         }
 
         /**
-         * 停止
+         * 停止 向左走
          */
-        public stopClip() {
-            this.maryObj.stopClip()
+        public stopLeft() {
+            this.maryObj.stopLeft()
+        }
+
+        /**
+         * 停止 向右走
+         */
+        public stopRight() {
+            this.maryObj.stopRight()
+        }
+
+        /**
+         * 停止 跳跃
+         */
+        public stopJump() {
+            this.maryObj.stopJump()
+        }
+
+        /**
+         * 停止 蹲下
+         */
+        public stopDrill() {
+            this.maryObj.stopDrill()
         }
     }
 }

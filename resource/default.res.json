@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "bg_jpg,egret_icon_png,brick_png,map_json,skin_png,mary_person_png,mary_person_json,buttons",
+			"keys": "bg_jpg,egret_icon_png,brick_png,map_json,skin_png,buttons,mary_big_left_png,mary_big_left_json,mary_big_right_png,mary_big_right_json",
 			"name": "preload"
 		}
 	],
@@ -32,20 +32,40 @@
 			"name": "skin_png"
 		},
 		{
-			"url": "assets/mary_person.png",
-			"type": "image",
-			"name": "mary_person_png"
-		},
-		{
-			"url": "assets/mary_person.json",
-			"type": "json",
-			"name": "mary_person_json"
-		},
-		{
 			"url": "assets/buttons.json",
 			"type": "sheet",
 			"name": "buttons",
 			"subkeys": "down,left,right,super,top"
+		},
+		{
+			"url": "assets/Mary/mary_big_left.gif",
+			"type": "image",
+			"name": "mary_big_left_gif"
+		},
+		{
+			"url": "assets/Mary/mary_big_left.png",
+			"type": "image",
+			"name": "mary_big_left_png"
+		},
+		{
+			"url": "assets/Mary/mary_big_right.gif",
+			"type": "image",
+			"name": "mary_big_right_gif"
+		},
+		{
+			"url": "assets/Mary/mary_big_right.png",
+			"type": "image",
+			"name": "mary_big_right_png"
+		},
+		{
+			"url": "assets/Mary/mary_big_left.json",
+			"type": "json",
+			"name": "mary_big_left_json"
+		},
+		{
+			"url": "assets/Mary/mary_big_right.json",
+			"type": "json",
+			"name": "mary_big_right_json"
 		}
 	]
 }
