@@ -33,6 +33,7 @@ namespace Controller {
             this.map = map
             
             this.listenerEvent()
+            this.listenerPersonMove()
         }
 
         private listenerEvent():void {
@@ -47,57 +48,65 @@ namespace Controller {
             })
         }
 
-        private walkLeft() {
+        private listenerPersonMove():void {
+            Common.GlobalDispatch.addEventListener(Common.BaseEvent.PERSON_MOVE, this.personMove, this)
+        }
+
+        private personMove(event:egret.Event) {
+            let x = this.person.x - egret.MainContext.instance.stage.stageWidth / 2
+            x = x < 0 ? 0 : x
+            this.map.setMapPos(x, 0)
+        }
+
+        private walkLeft(event?:egret.Event) {
             this.ticks.left.startTick(_ => {
-                this.person.left()
+                this.person.left(this.formatEvent(event))
             })
         }
 
-        private walkRight() {
+        private walkRight(event?:egret.Event) {
             this.ticks.right.startTick(_ => {
-                this.person.right()
+                this.person.right(this.formatEvent(event))
             })
         }
 
-        private walkUp() {
+        private walkUp(event?:egret.Event) {
 
         }
 
-        private walkDown() {
+        private walkDown(event?:egret.Event) {
 
         }
 
-        private walkSuper() {
+        private walkSuper(event?:egret.Event) {
 
         }
 
-        private walkLeftStop() {
+        private walkLeftStop(event?:egret.Event) {
             this.person.stopLeft()
             this.ticks.left.stopTick()
         }
 
-        private walkRightStop() {
+        private walkRightStop(event?:egret.Event) {
             this.person.stopRight()
             this.ticks.right.stopTick()
         }
 
-        private walkUpStop() {
+        private walkUpStop(event?:egret.Event) {
 
         }
 
-        private walkDownStop() {
+        private walkDownStop(event?:egret.Event) {
 
         }
 
-        private walkSuperStop() {
+        private walkSuperStop(event?:egret.Event) {
 
         }
 
-        private formatEvent(event:egret.Event) {
-            return {
-                ...event,
-                event: Common.BaseEvent.getEvent(event.type)
-            }
+        private formatEvent(event:egret.Event):egret.Event {
+            event['eventTypeName'] = Common.BaseEvent.getEvent(event.type)
+            return event
         }
 
     }

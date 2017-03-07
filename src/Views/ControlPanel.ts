@@ -16,6 +16,9 @@ namespace Views {
             {btn: 'superBtn', event: Common.BaseEvent.DIR_SUPER_END, key: Common.KeyEvent.TYPE.SPACE}
         ]
 
+        // 添加监听事件
+        private keyEvent = new Common.KeyEvent(document, ['keyup', 'keydown'])
+
         constructor() {
             super()
 
@@ -41,9 +44,9 @@ namespace Views {
                     Common.GlobalDispatch.dispatchEvent(e.event)
                 }, this)
 
-                Common.KeyEvent.addEventListener(document, 'keydown', e.key, event => {
+                this.keyEvent.registerListener('keydown', e.key, event => {
                     Common.GlobalDispatch.dispatchEvent(e.event)
-                }, this)
+                })
             })
 
             this.endEventList.forEach(e => {
@@ -51,9 +54,9 @@ namespace Views {
                     Common.GlobalDispatch.dispatchEvent(e.event)
                 }, this)
 
-                Common.KeyEvent.addEventListener(document, 'keyup', e.key, event => {
+                this.keyEvent.registerListener('keyup', e.key, event => {
                     Common.GlobalDispatch.dispatchEvent(e.event)
-                }, this)
+                })
             })
         }
     }

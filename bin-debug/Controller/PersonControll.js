@@ -1,14 +1,6 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var Controller;
 (function (Controller) {
     var PersonControll = (function () {
@@ -39,6 +31,7 @@ var Controller;
             this.person = person;
             this.map = map;
             this.listenerEvent();
+            this.listenerPersonMove();
         }
         PersonControll.prototype.listenerEvent = function () {
             var _this = this;
@@ -53,43 +46,53 @@ var Controller;
                 }
             });
         };
-        PersonControll.prototype.walkLeft = function () {
+        PersonControll.prototype.listenerPersonMove = function () {
+            Common.GlobalDispatch.addEventListener(Common.BaseEvent.PERSON_MOVE, this.personMove, this);
+        };
+        PersonControll.prototype.personMove = function (event) {
+            var x = this.person.x - egret.MainContext.instance.stage.stageWidth / 2;
+            x = x < 0 ? 0 : x;
+            this.map.setMapPos(x, 0);
+        };
+        PersonControll.prototype.walkLeft = function (event) {
             var _this = this;
             this.ticks.left.startTick(function (_) {
-                _this.person.left();
+                _this.person.left(_this.formatEvent(event));
             });
         };
-        PersonControll.prototype.walkRight = function () {
+        PersonControll.prototype.walkRight = function (event) {
             var _this = this;
             this.ticks.right.startTick(function (_) {
-                _this.person.right();
+                _this.person.right(_this.formatEvent(event));
             });
         };
-        PersonControll.prototype.walkUp = function () {
+        PersonControll.prototype.walkUp = function (event) {
         };
-        PersonControll.prototype.walkDown = function () {
+        PersonControll.prototype.walkDown = function (event) {
         };
-        PersonControll.prototype.walkSuper = function () {
+        PersonControll.prototype.walkSuper = function (event) {
         };
-        PersonControll.prototype.walkLeftStop = function () {
+        PersonControll.prototype.walkLeftStop = function (event) {
             this.person.stopLeft();
             this.ticks.left.stopTick();
         };
-        PersonControll.prototype.walkRightStop = function () {
+        PersonControll.prototype.walkRightStop = function (event) {
             this.person.stopRight();
             this.ticks.right.stopTick();
         };
-        PersonControll.prototype.walkUpStop = function () {
+        PersonControll.prototype.walkUpStop = function (event) {
         };
-        PersonControll.prototype.walkDownStop = function () {
+        PersonControll.prototype.walkDownStop = function (event) {
         };
-        PersonControll.prototype.walkSuperStop = function () {
+        PersonControll.prototype.walkSuperStop = function (event) {
         };
         PersonControll.prototype.formatEvent = function (event) {
-            return __assign({}, event, { event: Common.BaseEvent.getEvent(event.type) });
+            event['eventTypeName'] = Common.BaseEvent.getEvent(event.type);
+            return event;
         };
         return PersonControll;
     }());
     Controller.PersonControll = PersonControll;
     __reflect(PersonControll.prototype, "Controller.PersonControll");
 })(Controller || (Controller = {}));
+//# sourceMappingURL=PersonControll.js.map

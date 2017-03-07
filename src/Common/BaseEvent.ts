@@ -13,6 +13,8 @@ namespace Common {
         public static DIR_DOWN_END:egret.Event = new egret.Event('dir_down_end_event')
         public static DIR_SUPER_END:egret.Event = new egret.Event('dir_super_end_event')
 
+        public static PERSON_MOVE:egret.Event = new egret.Event('person_move')
+
         // 点击事件回调
         // public static DIR_LEFT_CB:egret.Event = new egret.Event('dir_left_event_callback')
         // public static DIR_RIGHT_CB:egret.Event = new egret.Event('dir_right_event_callback')

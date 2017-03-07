@@ -26,6 +26,8 @@ var Views;
                 { btn: 'downBtn', event: Common.BaseEvent.DIR_DOWN_END, key: Common.KeyEvent.TYPE.DOWN },
                 { btn: 'superBtn', event: Common.BaseEvent.DIR_SUPER_END, key: Common.KeyEvent.TYPE.SPACE }
             ];
+            // 添加监听事件
+            _this.keyEvent = new Common.KeyEvent(document, ['keyup', 'keydown']);
             _this.init();
             return _this;
         }
@@ -44,17 +46,17 @@ var Views;
                 _this[e.btn].addEventListener(egret.TouchEvent.TOUCH_BEGIN, function (event) {
                     Common.GlobalDispatch.dispatchEvent(e.event);
                 }, _this);
-                Common.KeyEvent.addEventListener(document, 'keydown', e.key, function (event) {
+                _this.keyEvent.registerListener('keydown', e.key, function (event) {
                     Common.GlobalDispatch.dispatchEvent(e.event);
-                }, _this);
+                });
             });
             this.endEventList.forEach(function (e) {
                 _this[e.btn].addEventListener(egret.TouchEvent.TOUCH_END, function (event) {
                     Common.GlobalDispatch.dispatchEvent(e.event);
                 }, _this);
-                Common.KeyEvent.addEventListener(document, 'keyup', e.key, function (event) {
+                _this.keyEvent.registerListener('keyup', e.key, function (event) {
                     Common.GlobalDispatch.dispatchEvent(e.event);
-                }, _this);
+                });
             });
         };
         return ControlPanel;
@@ -62,3 +64,4 @@ var Views;
     Views.ControlPanel = ControlPanel;
     __reflect(ControlPanel.prototype, "Views.ControlPanel");
 })(Views || (Views = {}));
+//# sourceMappingURL=ControlPanel.js.map

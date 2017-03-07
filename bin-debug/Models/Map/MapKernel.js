@@ -26,7 +26,7 @@ var Models;
             };
             MapKernel.prototype.setSize = function () {
                 this.width = egret.MainContext.instance.stage.stageWidth;
-                this.height = egret.MainContext.instance.stage.stageHeight;
+                // this.height = egret.MainContext.instance.stage.stageHeight
             };
             MapKernel.prototype.setPos = function () {
                 this.x = 0;
@@ -43,9 +43,27 @@ var Models;
                 this.brick = new Map.Bricks.BrickKernel(this.mapJson.brick);
                 this.addChild(this.brick);
             };
+            /**
+             * 获取 x 对应的 y 值
+             */
+            MapKernel.prototype.getCurrY = function (x) {
+            };
+            /**
+             * 获取地图当前位置
+             */
+            MapKernel.prototype.getCurrPos = function () {
+            };
+            /**
+             * 设置 地图 的位置
+             */
+            MapKernel.prototype.setMapPos = function (x, y) {
+                this.x = x == null ? this.x : x;
+                this.y = y == null ? this.y : y;
+            };
             return MapKernel;
         }(egret.Sprite));
         Map.MapKernel = MapKernel;
-        __reflect(MapKernel.prototype, "Models.Map.MapKernel");
+        __reflect(MapKernel.prototype, "Models.Map.MapKernel", ["Models.Map.IMap"]);
     })(Map = Models.Map || (Models.Map = {}));
 })(Models || (Models = {}));
+//# sourceMappingURL=MapKernel.js.map

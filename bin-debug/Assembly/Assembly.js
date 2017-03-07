@@ -40,3 +40,4 @@ var Assembly = (function (_super) {
     return Assembly;
 }(egret.Sprite));
 __reflect(Assembly.prototype, "Assembly");
+//# sourceMappingURL=Assembly.js.map

@@ -33,50 +33,56 @@ var Models;
             /**
              * 向左走
              */
-            PersonKernel.prototype.left = function () {
-                this.maryObj.left();
+            PersonKernel.prototype.left = function (event) {
+                this.maryObj.left(event);
             };
             /**
              * 向右走
              */
-            PersonKernel.prototype.right = function () {
-                this.maryObj.right();
+            PersonKernel.prototype.right = function (event) {
+                this.maryObj.right(event);
             };
             /**
              * 跳
              */
-            PersonKernel.prototype.jump = function () {
-                this.maryObj.jump();
+            PersonKernel.prototype.jump = function (event) {
+                this.maryObj.jump(event);
             };
             /**
              * 向下钻
              */
-            PersonKernel.prototype.drill = function () {
-                this.maryObj.drill();
+            PersonKernel.prototype.drill = function (event) {
+                this.maryObj.drill(event);
             };
             /**
              * 停止 向左走
              */
-            PersonKernel.prototype.stopLeft = function () {
-                this.maryObj.stopLeft();
+            PersonKernel.prototype.stopLeft = function (event) {
+                this.maryObj.stopLeft(event);
             };
             /**
              * 停止 向右走
              */
-            PersonKernel.prototype.stopRight = function () {
-                this.maryObj.stopRight();
+            PersonKernel.prototype.stopRight = function (event) {
+                this.maryObj.stopRight(event);
             };
             /**
              * 停止 跳跃
              */
-            PersonKernel.prototype.stopJump = function () {
-                this.maryObj.stopJump();
+            PersonKernel.prototype.stopJump = function (event) {
+                this.maryObj.stopJump(event);
             };
             /**
              * 停止 蹲下
              */
-            PersonKernel.prototype.stopDrill = function () {
-                this.maryObj.stopDrill();
+            PersonKernel.prototype.stopDrill = function (event) {
+                this.maryObj.stopDrill(event);
+            };
+            PersonKernel.prototype.getPos = function () {
+                return {
+                    x: this.x,
+                    y: this.y
+                };
             };
             return PersonKernel;
         }(egret.Sprite));
@@ -84,3 +90,4 @@ var Models;
         __reflect(PersonKernel.prototype, "Models.Person.PersonKernel");
     })(Person = Models.Person || (Models.Person = {}));
 })(Models || (Models = {}));
+//# sourceMappingURL=PersonKernel.js.map

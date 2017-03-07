@@ -6,8 +6,8 @@ var Common;
     var GlobalDispatch = (function () {
         function GlobalDispatch() {
         }
-        GlobalDispatch.dispatchEvent = function (event) {
-            this.dispatch.dispatchEvent(event);
+        GlobalDispatch.dispatchEvent = function (event, data) {
+            this.dispatch.dispatchEventWith(event.type, true, data);
         };
         GlobalDispatch.addEventListener = function (event, listener, thisObj, useCapture, priority) {
             this.dispatch.addEventListener(event.type, listener, thisObj, useCapture, priority);
@@ -18,3 +18,4 @@ var Common;
     Common.GlobalDispatch = GlobalDispatch;
     __reflect(GlobalDispatch.prototype, "Common.GlobalDispatch");
 })(Common || (Common = {}));
+//# sourceMappingURL=GlobalDispatch.js.map

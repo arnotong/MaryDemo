@@ -26,57 +26,64 @@ namespace Models.Person {
         /**
          * 向左走
          */
-        public left():void {
-            this.maryObj.left()
+        public left(event?:egret.Event):void {
+            this.maryObj.left(event)
         }
 
         /**
          * 向右走
          */
-        public right() {
-            this.maryObj.right()
+        public right(event?:egret.Event) {
+            this.maryObj.right(event)
         }
 
         /**
          * 跳
          */
-        public jump() {
-            this.maryObj.jump()
+        public jump(event?:egret.Event) {
+            this.maryObj.jump(event)
         }
 
         /**
          * 向下钻
          */
-        public drill() {
-            this.maryObj.drill()
+        public drill(event?:egret.Event) {
+            this.maryObj.drill(event)
         }
 
         /**
          * 停止 向左走
          */
-        public stopLeft() {
-            this.maryObj.stopLeft()
+        public stopLeft(event?:egret.Event) {
+            this.maryObj.stopLeft(event)
         }
 
         /**
          * 停止 向右走
          */
-        public stopRight() {
-            this.maryObj.stopRight()
+        public stopRight(event?:egret.Event) {
+            this.maryObj.stopRight(event)
         }
 
         /**
          * 停止 跳跃
          */
-        public stopJump() {
-            this.maryObj.stopJump()
+        public stopJump(event?:egret.Event) {
+            this.maryObj.stopJump(event)
         }
 
         /**
          * 停止 蹲下
          */
-        public stopDrill() {
-            this.maryObj.stopDrill()
+        public stopDrill(event?:egret.Event) {
+            this.maryObj.stopDrill(event)
+        }
+
+        public getPos() {
+            return {
+                x: this.x,
+                y: this.y
+            }
         }
     }
 }

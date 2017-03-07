@@ -1,5 +1,5 @@
 namespace Models.Map {
-    export class MapKernel extends egret.Sprite {
+    export class MapKernel extends egret.Sprite implements IMap {
         private brick:Bricks.BrickKernel = null
         private mapJson:any = null
 
@@ -17,7 +17,7 @@ namespace Models.Map {
 
         private setSize():void {
             this.width = egret.MainContext.instance.stage.stageWidth
-            this.height = egret.MainContext.instance.stage.stageHeight
+            // this.height = egret.MainContext.instance.stage.stageHeight
         }
 
         private setPos():void {
@@ -37,6 +37,28 @@ namespace Models.Map {
         private initBrick():void {
             this.brick = new Map.Bricks.BrickKernel(this.mapJson.brick)
             this.addChild(this.brick)
+        }
+
+        /**
+         * 获取 x 对应的 y 值
+         */
+        public getCurrY(x:number) {
+
+        }
+
+        /**
+         * 获取地图当前位置
+         */
+        public getCurrPos() {
+
+        }
+
+        /**
+         * 设置 地图 的位置
+         */
+        public setMapPos(x:number, y:number) {
+            this.x = x == null ? this.x : x
+            this.y = y == null ? this.y : y
         }
     }
 }

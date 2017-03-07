@@ -106,6 +106,8 @@ module Models.Person.Mary {
 
             this.x -= this.leftSpeed.getSpeed()
             this.gotoAndPlay()
+            
+            this.moveDispatchEvent()
         }
 
         /**
@@ -116,6 +118,8 @@ module Models.Person.Mary {
 
             this.x += this.rightSpeed.getSpeed()
             this.gotoAndPlay()
+
+            this.moveDispatchEvent()
         }
 
         /**
@@ -174,6 +178,13 @@ module Models.Person.Mary {
          */
         public stopSuper(event?:egret.Event) {
 
+        }
+
+        /**
+         * 人物移动 事件
+         */
+        protected moveDispatchEvent():void {
+            Common.GlobalDispatch.dispatchEvent(Common.BaseEvent.PERSON_MOVE)
         }
     }
 }

@@ -29,6 +29,8 @@ var Common;
     BaseEvent.DIR_UP_END = new egret.Event('dir_up_end_event');
     BaseEvent.DIR_DOWN_END = new egret.Event('dir_down_end_event');
     BaseEvent.DIR_SUPER_END = new egret.Event('dir_super_end_event');
+    BaseEvent.PERSON_MOVE = new egret.Event('person_move');
     Common.BaseEvent = BaseEvent;
     __reflect(BaseEvent.prototype, "Common.BaseEvent");
 })(Common || (Common = {}));
+//# sourceMappingURL=BaseEvent.js.map

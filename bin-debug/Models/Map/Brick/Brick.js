@@ -65,3 +65,4 @@ var Models;
         })(Bricks = Map.Bricks || (Map.Bricks = {}));
     })(Map = Models.Map || (Models.Map = {}));
 })(Models || (Models = {}));
+//# sourceMappingURL=Brick.js.map

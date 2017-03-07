@@ -106,6 +106,7 @@ var Models;
                     this.setLeftMovieClip();
                     this.x -= this.leftSpeed.getSpeed();
                     this.gotoAndPlay();
+                    this.moveDispatchEvent();
                 };
                 /**
                  * 向右走
@@ -114,6 +115,7 @@ var Models;
                     this.setRightMovieClip();
                     this.x += this.rightSpeed.getSpeed();
                     this.gotoAndPlay();
+                    this.moveDispatchEvent();
                 };
                 /**
                  * 跳
@@ -159,6 +161,12 @@ var Models;
                  */
                 BaseMary.prototype.stopSuper = function (event) {
                 };
+                /**
+                 * 人物移动 事件
+                 */
+                BaseMary.prototype.moveDispatchEvent = function () {
+                    Common.GlobalDispatch.dispatchEvent(Common.BaseEvent.PERSON_MOVE);
+                };
                 return BaseMary;
             }(egret.Sprite));
             Mary.BaseMary = BaseMary;
@@ -166,3 +174,4 @@ var Models;
         })(Mary = Person.Mary || (Person.Mary = {}));
     })(Person = Models.Person || (Models.Person = {}));
 })(Models || (Models = {}));
+//# sourceMappingURL=BaseMary.js.map

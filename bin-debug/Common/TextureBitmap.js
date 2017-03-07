@@ -36,3 +36,4 @@ var Common;
     Common.TextureBitmap = TextureBitmap;
     __reflect(TextureBitmap.prototype, "Common.TextureBitmap");
 })(Common || (Common = {}));
+//# sourceMappingURL=TextureBitmap.js.map
