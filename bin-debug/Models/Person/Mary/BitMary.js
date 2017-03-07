@@ -43,4 +43,3 @@ var Models;
         })(Mary = Person.Mary || (Person.Mary = {}));
     })(Person = Models.Person || (Models.Person = {}));
 })(Models || (Models = {}));
-//# sourceMappingURL=BitMary.js.map

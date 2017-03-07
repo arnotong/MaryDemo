@@ -95,4 +95,3 @@ var Controller;
     Controller.PersonControll = PersonControll;
     __reflect(PersonControll.prototype, "Controller.PersonControll");
 })(Controller || (Controller = {}));
-//# sourceMappingURL=PersonControll.js.map
