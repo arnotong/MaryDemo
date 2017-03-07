@@ -6,6 +6,16 @@ var Common;
     var BaseEvent = (function () {
         function BaseEvent() {
         }
+        // 点击事件回调
+        // public static DIR_LEFT_CB:egret.Event = new egret.Event('dir_left_event_callback')
+        // public static DIR_RIGHT_CB:egret.Event = new egret.Event('dir_right_event_callback')
+        // public static DIR_TOP_CB:egret.Event = new egret.Event('dir_top_event_callback')
+        // public static DIR_BOTTOM_CB:egret.Event = new egret.Event('dir_bottom_event_callback')
+        BaseEvent.getEvent = function (name) {
+            var _this = this;
+            var key = Object.keys(BaseEvent).filter(function (key) { return _this[key].type === name; })[0];
+            return this[key];
+        };
         return BaseEvent;
     }());
     // 点击事件

@@ -10,6 +10,7 @@ var game_file_list = [
 	"bin-debug/Models/Person/Mary/BaseMary.js",
 	"bin-debug/LoadingUI.js",
 	"bin-debug/Common/BaseEvent.js",
+	"bin-debug/Common/BaseTick.js",
 	"bin-debug/Common/GlobalDispatch.js",
 	"bin-debug/Common/keyEvent.js",
 	"bin-debug/Common/LoadConfJson.js",
@@ -24,6 +25,7 @@ var game_file_list = [
 	"bin-debug/Assembly/Assembly.js",
 	"bin-debug/Models/Person/Mary/BitMary.js",
 	"bin-debug/Models/Person/Mary/IMary.js",
+	"bin-debug/Models/Person/Mary/MarySpeed.js",
 	"bin-debug/Models/Person/PersonKernel.js",
 	"bin-debug/Views/ControlPanel.js",
 	//----auto game_file_list end----

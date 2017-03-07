@@ -33,39 +33,50 @@ var Models;
             /**
              * 向左走
              */
-            PersonKernel.prototype.walkLeft = function () {
+            PersonKernel.prototype.left = function () {
+                this.maryObj.left();
             };
             /**
              * 向右走
              */
-            PersonKernel.prototype.walkRight = function () {
-                this.maryObj.walkRight();
-            };
-            /**
-             * 向左跑
-             */
-            PersonKernel.prototype.runLeft = function () {
-            };
-            /**
-             * 向右跑
-             */
-            PersonKernel.prototype.runRight = function () {
+            PersonKernel.prototype.right = function () {
+                this.maryObj.right();
             };
             /**
              * 跳
              */
             PersonKernel.prototype.jump = function () {
+                this.maryObj.jump();
             };
             /**
              * 向下钻
              */
-            PersonKernel.prototype.toDrill = function () {
+            PersonKernel.prototype.drill = function () {
+                this.maryObj.drill();
             };
             /**
-             * 停止
+             * 停止 向左走
              */
-            PersonKernel.prototype.stopClip = function () {
-                this.maryObj.stopClip();
+            PersonKernel.prototype.stopLeft = function () {
+                this.maryObj.stopLeft();
+            };
+            /**
+             * 停止 向右走
+             */
+            PersonKernel.prototype.stopRight = function () {
+                this.maryObj.stopRight();
+            };
+            /**
+             * 停止 跳跃
+             */
+            PersonKernel.prototype.stopJump = function () {
+                this.maryObj.stopJump();
+            };
+            /**
+             * 停止 蹲下
+             */
+            PersonKernel.prototype.stopDrill = function () {
+                this.maryObj.stopDrill();
             };
             return PersonKernel;
         }(egret.Sprite));
