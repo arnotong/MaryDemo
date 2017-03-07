@@ -63,4 +63,3 @@ var Common;
     Common.AssetAdapter = AssetAdapter;
     __reflect(AssetAdapter.prototype, "Common.AssetAdapter", ["eui.IAssetAdapter"]);
 })(Common || (Common = {}));
-//# sourceMappingURL=AssetAdapter.js.map

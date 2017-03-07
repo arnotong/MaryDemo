@@ -28,6 +28,8 @@ var Models;
                     _this.rightSpeed = 10;
                     _this.upSpeed = 2;
                     _this.downSpeed = 2;
+                    // 定时跑动 flag
+                    _this.timeRunFlag = false;
                     // this.setRightMovieClip()
                     _this.initAllMovieClip();
                     return _this;
@@ -87,6 +89,13 @@ var Models;
                     this.setMovieClipData(this.downMovieClip);
                 };
                 /**
+                 * 设置 连续动作
+                 */
+                BaseMary.prototype.timeRun = function (func) {
+                    if (this.timeRunFlag) {
+                    }
+                };
+                /**
                  * 向左走
                  */
                 BaseMary.prototype.walkLeft = function () {
@@ -132,4 +141,3 @@ var Models;
         })(Mary = Person.Mary || (Person.Mary = {}));
     })(Person = Models.Person || (Models.Person = {}));
 })(Models || (Models = {}));
-//# sourceMappingURL=BaseMary.js.map

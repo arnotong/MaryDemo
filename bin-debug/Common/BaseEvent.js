@@ -22,4 +22,3 @@ var Common;
     Common.BaseEvent = BaseEvent;
     __reflect(BaseEvent.prototype, "Common.BaseEvent");
 })(Common || (Common = {}));
-//# sourceMappingURL=BaseEvent.js.map

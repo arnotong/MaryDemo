@@ -8,7 +8,7 @@ var game_file_list = [
 	"libs/modules/res/res.js",
 	"libs/modules/eui/eui.js",
 	"bin-debug/Models/Person/Mary/BaseMary.js",
-	"bin-debug/Views/ControlPanel.js",
+	"bin-debug/LoadingUI.js",
 	"bin-debug/Common/BaseEvent.js",
 	"bin-debug/Common/GlobalDispatch.js",
 	"bin-debug/Common/keyEvent.js",
@@ -16,7 +16,7 @@ var game_file_list = [
 	"bin-debug/Common/TextureBitmap.js",
 	"bin-debug/Common/ThemeAdapter.js",
 	"bin-debug/Controller/PersonControll.js",
-	"bin-debug/LoadingUI.js",
+	"bin-debug/Common/AssetAdapter.js",
 	"bin-debug/Main.js",
 	"bin-debug/Models/Map/Brick/Brick.js",
 	"bin-debug/Models/Map/Brick/BrickKernel.js",
@@ -25,7 +25,7 @@ var game_file_list = [
 	"bin-debug/Models/Person/Mary/BitMary.js",
 	"bin-debug/Models/Person/Mary/IMary.js",
 	"bin-debug/Models/Person/PersonKernel.js",
-	"bin-debug/Common/AssetAdapter.js",
+	"bin-debug/Views/ControlPanel.js",
 	//----auto game_file_list end----
 ];
 
