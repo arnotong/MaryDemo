@@ -13,37 +13,59 @@ var Assembly = (function (_super) {
         _this.map = null;
         _this.person = null;
         _this.control = null;
-        _this.world = new p2.World();
+        _this.world = Common.GlobalWorld.world;
         _this.init();
         return _this;
     }
+    Assembly.prototype.initPlane = function () {
+        var plane = new p2.Plane();
+        var planeBody = new p2.Body();
+        planeBody.addShape(plane);
+        planeBody.displays = [];
+        this.world.addBody(planeBody);
+    };
+    Assembly.prototype.initWorld = function () {
+        var _this = this;
+        this.world.sleepMode = p2.World.BODY_SLEEPING;
+        egret.Ticker.getInstance().register(function (dt) {
+            if (dt < 10)
+                return;
+            if (dt > 1000)
+                return;
+            _this.world.step(dt / 1000);
+            var height = egret.MainContext.instance.stage.stageHeight;
+            _this.world.bodies.forEach(function (body) {
+                body.displays.forEach(function (box) {
+                    if (box) {
+                        box.x = body.position[0];
+                        box.y = height - body.position[1];
+                        console.log(body.position);
+                        box.rotation = 360 - body.angle * 180 / Math.PI;
+                    }
+                });
+            });
+        }, this);
+    };
     Assembly.prototype.init = function () {
-        // let body:p2.Body = new p2.Body({mass: 1, position: [1, 10]})
-        // let shape:p2.Shape = new p2.Circle(1)
-        // body.addShape(shape)
-        // this.world.addBody(body)
-        var factor = 50;
-        //添加方形刚体
-        var boxShape = new p2.Rectangle(2, 1);
-        var boxBody = new p2.Body({ mass: 1, position: [0, 1], angularVelocity: 1 });
-        boxBody.addShape(boxShape);
-        this.world.addBody(boxBody);
-        var display = new Common.TextureBitmap('bg_jpg').getBitmap();
-        display.width = boxShape.width * factor;
-        display.height = boxShape.height * factor;
-        console.log(display, boxShape.width * factor, boxShape.height * factor);
-        display.anchorOffsetX = display.width / 2;
-        display.anchorOffsetY = display.height / 2;
-        boxBody.displays = [display];
-        this.addChild(display);
-        // this.initMap()
+        this.initWorld();
+        this.initPlane();
+        this.initMap();
         // this.initPerson()
         // this.initControlPanel()
         // this.registerController()
+        var body = new p2.Body({ mass: 1, position: [10, 100] });
+        var box = new p2.Box({ width: 20, height: 20 });
+        body.addShape(box);
+        var display = new Common.TextureBitmap('bg_jpg').getBitmap();
+        display.width = box.width;
+        display.height = box.height;
+        body.displays = [display];
+        // this.addChild(display)
+        // this.world.addBody(body)
     };
     Assembly.prototype.initMap = function () {
         this.map = new Models.Map.MapKernel();
-        // this.word.addBody(this.map)
+        this.addChild(this.map);
     };
     Assembly.prototype.initPerson = function () {
         this.person = new Models.Person.PersonKernel();

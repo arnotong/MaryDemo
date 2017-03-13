@@ -1,48 +1,37 @@
 namespace Models.Map.Bricks {
-    export class Brick extends egret.DisplayObjectContainer {
-        private posX:number = 0
-        private posY:number = 0
-
+    export class Brick extends egret.Sprite {
         private xNum:number = 0
         private yNum:number = 0
+        
+        private resName:string = null
 
-        private bWidth:number = 0
-        private bHeight:number = 0
+        private bitmapW:number = 0
+        private bitmapH:number = 0
 
-        public constructor (xNum:number, yNum:number, x:number, y:number) {
+        public constructor (resName:string, bitmapW:number, bitmapH:number, xNum:number, yNum:number) {
             super ()
 
+            this.resName = resName
+            this.bitmapW = bitmapW
+            this.bitmapH = bitmapH
             this.xNum = xNum
             this.yNum = yNum
 
-            this.posX = x
-            this.posY = y
-
-            this.setBitmapSize()
-            this.setPos()
             this.setSize()
+
+            this.x = 0
+            this.y = 0
+
             this.loadTexture()
         }
 
-        private setBitmapSize():void {
-            var bitmap:egret.Bitmap = this.getBitmap(0, 0)
-
-            this.bHeight = bitmap.height
-            this.bWidth = bitmap.width
-        }
-
-        private setPos():void {
-            this.x = this.posX
-            this.y = this.posY
-        }
-
         private setSize():void {
-            this.width = this.bWidth * this.xNum
-            this.height = this.bHeight * this.yNum
+            this.width = this.bitmapW * this.xNum
+            this.height = this.bitmapH * this.yNum
         }
 
         private getBitmap(x:number, y:number):egret.Bitmap {
-            let bitmap:egret.Bitmap = new Common.TextureBitmap('brick_png').getBitmap()
+            let bitmap:egret.Bitmap = new Common.TextureBitmap(this.resName).getBitmap()
             bitmap.x = x
             bitmap.y = y
 
@@ -52,7 +41,7 @@ namespace Models.Map.Bricks {
         private loadTexture():void {
             for (var i=0; i<this.xNum; i++) {
                 for (var j=0; j<this.yNum; j++){
-                    this.addChild(this.getBitmap(this.bWidth * i, this.bHeight * j))
+                    this.addChild(this.getBitmap(this.bitmapW * i, this.bitmapH * j))
                 }
             }
         }

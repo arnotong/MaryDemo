@@ -14,39 +14,30 @@ var Models;
         (function (Bricks) {
             var Brick = (function (_super) {
                 __extends(Brick, _super);
-                function Brick(xNum, yNum, x, y) {
+                function Brick(resName, bitmapW, bitmapH, xNum, yNum) {
                     var _this = _super.call(this) || this;
-                    _this.posX = 0;
-                    _this.posY = 0;
                     _this.xNum = 0;
                     _this.yNum = 0;
-                    _this.bWidth = 0;
-                    _this.bHeight = 0;
+                    _this.resName = null;
+                    _this.bitmapW = 0;
+                    _this.bitmapH = 0;
+                    _this.resName = resName;
+                    _this.bitmapW = bitmapW;
+                    _this.bitmapH = bitmapH;
                     _this.xNum = xNum;
                     _this.yNum = yNum;
-                    _this.posX = x;
-                    _this.posY = y;
-                    _this.setBitmapSize();
-                    _this.setPos();
                     _this.setSize();
+                    _this.x = 0;
+                    _this.y = 0;
                     _this.loadTexture();
                     return _this;
                 }
-                Brick.prototype.setBitmapSize = function () {
-                    var bitmap = this.getBitmap(0, 0);
-                    this.bHeight = bitmap.height;
-                    this.bWidth = bitmap.width;
-                };
-                Brick.prototype.setPos = function () {
-                    this.x = this.posX;
-                    this.y = this.posY;
-                };
                 Brick.prototype.setSize = function () {
-                    this.width = this.bWidth * this.xNum;
-                    this.height = this.bHeight * this.yNum;
+                    this.width = this.bitmapW * this.xNum;
+                    this.height = this.bitmapH * this.yNum;
                 };
                 Brick.prototype.getBitmap = function (x, y) {
-                    var bitmap = new Common.TextureBitmap('brick_png').getBitmap();
+                    var bitmap = new Common.TextureBitmap(this.resName).getBitmap();
                     bitmap.x = x;
                     bitmap.y = y;
                     return bitmap;
@@ -54,12 +45,12 @@ var Models;
                 Brick.prototype.loadTexture = function () {
                     for (var i = 0; i < this.xNum; i++) {
                         for (var j = 0; j < this.yNum; j++) {
-                            this.addChild(this.getBitmap(this.bWidth * i, this.bHeight * j));
+                            this.addChild(this.getBitmap(this.bitmapW * i, this.bitmapH * j));
                         }
                     }
                 };
                 return Brick;
-            }(egret.DisplayObjectContainer));
+            }(egret.Sprite));
             Bricks.Brick = Brick;
             __reflect(Brick.prototype, "Models.Map.Bricks.Brick");
         })(Bricks = Map.Bricks || (Map.Bricks = {}));
