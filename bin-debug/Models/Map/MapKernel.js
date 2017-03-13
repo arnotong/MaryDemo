@@ -21,17 +21,17 @@ var Models;
                 return _this;
             }
             MapKernel.prototype.init = function () {
-                this.setSize();
-                this.setPos();
+                // this.setSize()
+                // this.setPos()
             };
             MapKernel.prototype.setSize = function () {
-                this.width = egret.MainContext.instance.stage.stageWidth;
+                // this.width = egret.MainContext.instance.stage.stageWidth
                 // this.height = egret.MainContext.instance.stage.stageHeight
             };
-            MapKernel.prototype.setPos = function () {
-                this.x = 0;
-                this.y = 0;
-            };
+            // private setPos():void {
+            //     this.x = 0
+            //     this.y = 0
+            // }
             MapKernel.prototype.getMapJson = function () {
                 this.mapJson = RES.getRes('map_json');
                 this.initMap();
@@ -40,8 +40,8 @@ var Models;
                 this.initBrick();
             };
             MapKernel.prototype.initBrick = function () {
-                this.brick = new Map.Bricks.BrickKernel(this.mapJson.brick);
-                this.addChild(this.brick);
+                // this.brick = new Map.Bricks.BrickKernel(this.mapJson.brick)
+                // this.addChild(this.brick)
             };
             /**
              * 获取 x 对应的 y 值

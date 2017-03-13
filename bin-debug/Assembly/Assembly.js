@@ -13,18 +13,37 @@ var Assembly = (function (_super) {
         _this.map = null;
         _this.person = null;
         _this.control = null;
+        _this.world = new p2.World();
         _this.init();
         return _this;
     }
     Assembly.prototype.init = function () {
-        this.initMap();
-        this.initPerson();
-        this.initControlPanel();
-        this.registerController();
+        // let body:p2.Body = new p2.Body({mass: 1, position: [1, 10]})
+        // let shape:p2.Shape = new p2.Circle(1)
+        // body.addShape(shape)
+        // this.world.addBody(body)
+        var factor = 50;
+        //添加方形刚体
+        var boxShape = new p2.Rectangle(2, 1);
+        var boxBody = new p2.Body({ mass: 1, position: [0, 1], angularVelocity: 1 });
+        boxBody.addShape(boxShape);
+        this.world.addBody(boxBody);
+        var display = new Common.TextureBitmap('bg_jpg').getBitmap();
+        display.width = boxShape.width * factor;
+        display.height = boxShape.height * factor;
+        console.log(display, boxShape.width * factor, boxShape.height * factor);
+        display.anchorOffsetX = display.width / 2;
+        display.anchorOffsetY = display.height / 2;
+        boxBody.displays = [display];
+        this.addChild(display);
+        // this.initMap()
+        // this.initPerson()
+        // this.initControlPanel()
+        // this.registerController()
     };
     Assembly.prototype.initMap = function () {
         this.map = new Models.Map.MapKernel();
-        this.addChild(this.map);
+        // this.word.addBody(this.map)
     };
     Assembly.prototype.initPerson = function () {
         this.person = new Models.Person.PersonKernel();

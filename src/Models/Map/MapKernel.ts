@@ -11,19 +11,19 @@ namespace Models.Map {
         }
 
         private init():void {
-            this.setSize()
-            this.setPos()
+            // this.setSize()
+            // this.setPos()
         }
 
         private setSize():void {
-            this.width = egret.MainContext.instance.stage.stageWidth
+            // this.width = egret.MainContext.instance.stage.stageWidth
             // this.height = egret.MainContext.instance.stage.stageHeight
         }
 
-        private setPos():void {
-            this.x = 0
-            this.y = 0
-        }
+        // private setPos():void {
+        //     this.x = 0
+        //     this.y = 0
+        // }
 
         private getMapJson():void {
             this.mapJson = RES.getRes('map_json')
@@ -35,8 +35,8 @@ namespace Models.Map {
         }
 
         private initBrick():void {
-            this.brick = new Map.Bricks.BrickKernel(this.mapJson.brick)
-            this.addChild(this.brick)
+            // this.brick = new Map.Bricks.BrickKernel(this.mapJson.brick)
+            // this.addChild(this.brick)
         }
 
         /**
