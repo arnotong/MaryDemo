@@ -14,34 +14,38 @@ var Models;
         (function (Bricks) {
             var BrickP2 = (function (_super) {
                 __extends(BrickP2, _super);
-                function BrickP2(resName, bitmapW, bitmapH, xNum, yNum, x, y) {
+                function BrickP2(resName, bitmapW, bitmapH, xNum, yNum, x, y, isLand) {
                     var _this = _super.call(this) || this;
                     _this.xNum = 0;
                     _this.yNum = 0;
                     _this.resName = null;
                     _this.bitmapW = 0;
                     _this.bitmapH = 0;
+                    _this.posX = 0;
+                    _this.posY = 0;
                     _this.box = null;
+                    _this.isLand = false;
                     _this.resName = resName;
                     _this.bitmapW = bitmapW;
                     _this.bitmapH = bitmapH;
                     _this.xNum = xNum;
                     _this.yNum = yNum;
-                    _this.setPos(x, y);
+                    _this.posX = x;
+                    _this.posY = y;
+                    _this.isLand = isLand;
+                    console.log('island -----', isLand);
                     _this.initBox();
                     _this.initBody();
                     _this.initBrick();
                     _this.addBodyToWorld();
                     return _this;
                 }
-                BrickP2.prototype.setPos = function (x, y) {
-                    this.x = x;
-                    this.y = y;
-                };
                 BrickP2.prototype.initBody = function () {
                     this.body = this.getBody({
                         mass: 0,
-                        position: [this.x, this.y]
+                        allowSleep: false,
+                        collisionResponse: this.isLand,
+                        position: [this.posX, this.bitmapH * this.yNum / 2]
                     });
                 };
                 BrickP2.prototype.initBox = function () {
@@ -49,12 +53,18 @@ var Models;
                         width: this.bitmapW * this.xNum,
                         height: this.bitmapH * this.yNum
                     });
-                    console.log(this.bitmapW * this.xNum, this.bitmapH * this.yNum);
                 };
                 BrickP2.prototype.initBrick = function () {
-                    this.addChild(new Bricks.Brick(this.resName, this.bitmapW, this.bitmapH, this.xNum, this.yNum));
+                    var display = null;
+                    if (this.isLand) {
+                        display = new Bricks.Brick(this.resName, this.bitmapW, this.bitmapH, this.xNum, this.yNum);
+                        this.addChild(display);
+                    }
+                    this.anchorOffsetX = 0;
+                    this.anchorOffsetY = this.box.height / 2;
+                    // console.log(this.anchorOffsetX, this.anchorOffsetY, this.box)
                     this.body.addShape(this.box);
-                    this.body.displays = [this];
+                    this.body.displays = [display];
                     // this.addDisplay([new Brick(this.resName, this.bitmapW, this.bitmapH, this.xNum, this.yNum)], this.box)
                 };
                 return BrickP2;

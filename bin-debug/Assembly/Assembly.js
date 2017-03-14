@@ -19,7 +19,9 @@ var Assembly = (function (_super) {
     }
     Assembly.prototype.initPlane = function () {
         var plane = new p2.Plane();
-        var planeBody = new p2.Body();
+        var planeBody = new p2.Body({
+            position: [0, 0]
+        });
         planeBody.addShape(plane);
         planeBody.displays = [];
         this.world.addBody(planeBody);
@@ -39,7 +41,6 @@ var Assembly = (function (_super) {
                     if (box) {
                         box.x = body.position[0];
                         box.y = height - body.position[1];
-                        console.log(body.position);
                         box.rotation = 360 - body.angle * 180 / Math.PI;
                     }
                 });
@@ -53,15 +54,17 @@ var Assembly = (function (_super) {
         // this.initPerson()
         // this.initControlPanel()
         // this.registerController()
-        var body = new p2.Body({ mass: 1, position: [10, 100] });
-        var box = new p2.Box({ width: 20, height: 20 });
+        var body = new p2.Body({ mass: 10, position: [680, 500] });
+        var box = new p2.Circle({ radius: 14 });
         body.addShape(box);
         var display = new Common.TextureBitmap('bg_jpg').getBitmap();
-        display.width = box.width;
-        display.height = box.height;
+        display.width = box.radius * 2;
+        display.height = box.radius * 2;
+        display.anchorOffsetX = display.width / 2;
+        display.anchorOffsetY = display.height / 2;
         body.displays = [display];
-        // this.addChild(display)
-        // this.world.addBody(body)
+        this.addChild(display);
+        this.world.addBody(body);
     };
     Assembly.prototype.initMap = function () {
         this.map = new Models.Map.MapKernel();

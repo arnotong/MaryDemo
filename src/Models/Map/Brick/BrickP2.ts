@@ -2,12 +2,20 @@ namespace Models.Map.Bricks {
     export class BrickP2 extends Common.P2Body {
         private xNum:number = 0
         private yNum:number = 0
+
         private resName:string = null
+        
         private bitmapW:number = 0
         private bitmapH:number = 0
+
+        private posX:number = 0
+        private posY:number = 0
+
         private box:p2.Box = null
 
-        constructor(resName:string, bitmapW:number, bitmapH:number, xNum:number, yNum:number, x:number, y:number) {
+        private isLand:boolean = false
+
+        constructor(resName:string, bitmapW:number, bitmapH:number, xNum:number, yNum:number, x:number, y:number, isLand:boolean) {
             super()
 
             this.resName = resName
@@ -16,22 +24,24 @@ namespace Models.Map.Bricks {
             this.xNum = xNum
             this.yNum = yNum
 
-            this.setPos(x, y)
+            this.posX = x
+            this.posY = y
+
+            this.isLand = isLand
+            console.log('island -----', isLand)
+            
             this.initBox()
             this.initBody()
             this.initBrick()
             this.addBodyToWorld()
         }
 
-        private setPos(x:number, y:number):void {
-            this.x = x
-            this.y = y
-        }
-
         private initBody():void {
             this.body = this.getBody({
                 mass: 0,
-                position: [this.x, this.y]
+                allowSleep: false,
+                collisionResponse: this.isLand,
+                position: [this.posX, this.bitmapH * this.yNum / 2]
             })
         }
 
@@ -40,15 +50,23 @@ namespace Models.Map.Bricks {
                 width: this.bitmapW * this.xNum,
                 height: this.bitmapH * this.yNum
             })
-
-            console.log(this.bitmapW * this.xNum,this.bitmapH * this.yNum)
         }
 
         private initBrick():void {
-            this.addChild(new Brick(this.resName, this.bitmapW, this.bitmapH, this.xNum, this.yNum))
-            
+            let display = null
+
+            if (this.isLand) {
+                display = new Brick(this.resName, this.bitmapW, this.bitmapH, this.xNum, this.yNum)
+                this.addChild(display)
+            }
+
+            this.anchorOffsetX = 0
+            this.anchorOffsetY = (<p2.Box>this.box).height / 2
+
+            // console.log(this.anchorOffsetX, this.anchorOffsetY, this.box)
+
             this.body.addShape(this.box)
-            this.body.displays = [this]
+            this.body.displays = [display]
             // this.addDisplay([new Brick(this.resName, this.bitmapW, this.bitmapH, this.xNum, this.yNum)], this.box)
         }
     }

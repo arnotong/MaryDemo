@@ -13,7 +13,9 @@ class Assembly extends egret.Sprite {
 
     private initPlane():void {
         let plane:p2.Plane = new p2.Plane()
-        let planeBody:p2.Body = new p2.Body()
+        let planeBody:p2.Body = new p2.Body({
+            position: [0, 0]
+        })
         planeBody.addShape(plane)
         planeBody.displays = []
         this.world.addBody(planeBody)
@@ -34,7 +36,6 @@ class Assembly extends egret.Sprite {
                     if (box) {
                         box.x = body.position[0]
                         box.y = height - body.position[1]
-                        console.log(body.position)
                         box.rotation = 360 - body.angle * 180 / Math.PI
                     }
                 })
@@ -44,7 +45,7 @@ class Assembly extends egret.Sprite {
 
     private init():void {
         this.initWorld()
-        this.initPlane()
+        this.initPlane() 
         
         this.initMap()
         // this.initPerson()
@@ -52,17 +53,20 @@ class Assembly extends egret.Sprite {
 
         // this.registerController()
 
-        let body = new p2.Body({mass: 1, position: [10, 100]})
-        let box = new p2.Box({width: 20, height: 20})
+        let body = new p2.Body({mass: 10, position: [680, 500]})
+        let box = new p2.Circle({ radius: 14 })
         body.addShape(box)
         let display = new Common.TextureBitmap('bg_jpg').getBitmap()
         
-        display.width = (<p2.Box>box).width
-        display.height = (<p2.Box>box).height
+        display.width = (<p2.Circle>box).radius * 2
+        display.height = (<p2.Circle>box).radius * 2
+
+        display.anchorOffsetX = display.width / 2
+        display.anchorOffsetY = display.height / 2
 
         body.displays = [display]
-        // this.addChild(display)
-        // this.world.addBody(body)
+        this.addChild(display)
+        this.world.addBody(body)
     }
 
     private initMap():void {

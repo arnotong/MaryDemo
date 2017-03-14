@@ -18,11 +18,13 @@ var Models;
                     var _this = _super.call(this) || this;
                     _this.brickData = null;
                     _this.brickData = brickData;
+                    _this.width = 0;
+                    _this.height = 0;
                     _this.initBrick();
                     return _this;
                 }
                 BrickKernel.prototype.setBrickPos = function () {
-                    this.height = this.brickData.height;
+                    // this.height = this.brickData.height
                     this.x = 0;
                     this.y = 0; // egret.MainContext.instance.stage.stageHeight - this.height
                 };
@@ -37,16 +39,19 @@ var Models;
                     var bitmapW = bitmap.width;
                     var bitmapH = bitmap.height;
                     var preEndX = 0;
+                    this.brickData.data.length = 7;
                     this.brickData.data.forEach(function (map) {
-                        if (map.land) {
-                            var brickP2 = new Bricks.BrickP2(resName, bitmapW, bitmapH, map.w, map.h, preEndX, 0);
-                            _this.addChild(brickP2);
-                        }
+                        // if (map.land) {
+                        //     var brickP2:BrickP2 = new BrickP2(resName, bitmapW, bitmapH, map.w, map.h, preEndX, 0)
+                        //     this.addChild(brickP2)
+                        // }
+                        var brickP2 = new Bricks.BrickP2(resName, bitmapW, bitmapH, map.w, map.h, preEndX, 0, map.land);
+                        _this.addChild(brickP2);
                         preEndX = map.w * bitmapW + preEndX;
                     });
                 };
                 return BrickKernel;
-            }(Common.P2Body));
+            }(egret.Sprite));
             Bricks.BrickKernel = BrickKernel;
             __reflect(BrickKernel.prototype, "Models.Map.Bricks.BrickKernel");
         })(Bricks = Map.Bricks || (Map.Bricks = {}));
