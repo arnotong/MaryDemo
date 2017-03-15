@@ -13,7 +13,7 @@ namespace Common {
         public static b2DebugDraw = Box2D.Dynamics.b2DebugDraw
         public static b2MouseJointDef =  Box2D.Dynamics.Joints.b2MouseJointDef
 
-        public static world:Box2D.Dynamics.b2World = new Box2D.Dynamics.b2World(new Box2D.Common.Math.b2Vec2(0, 10), true)
+        public static world:Box2D.Dynamics.b2World = new Box2D.Dynamics.b2World(new Box2D.Common.Math.b2Vec2(0, 9.81), true)
 
         public static converNum(num:number) {
             return num / 30

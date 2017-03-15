@@ -11,40 +11,56 @@ class Assembly extends egret.Sprite {
         this.init()
     }
 
-    // private initPlane():void {
-    //     let plane:p2.Plane = new p2.Plane()
-    //     let planeBody:p2.Body = new p2.Body({
-    //         position: [0, 0]
-    //     })
-    //     planeBody.addShape(plane)
-    //     planeBody.displays = []
-    //     this.world.addBody(planeBody)
-    // }
+    private initPlane():void {
+        let body = new Common.B2Box.b2BodyDef()
+        body.position.Set(0, egret.MainContext.instance.stage.stageHeight)
+        body.type = Common.B2Box.b2Body.b2_staticBody
+
+        let fixDef = new Common.B2Box.b2FixtureDef()
+        // fixDef.density = 1.0
+        // fixDef.friction = 0.5
+        // fixDef.restitution = 0.2
+
+        let shape = new Common.B2Box.b2PolygonShape()
+        shape.SetAsBox(320/30, 10/30)
+        fixDef.shape = shape
+
+        let display = new Common.TextureBitmap('brick_png').getBitmap()
+        display.width = 320
+        display.height = 10
+        display.x = 0
+        display.y = egret.MainContext.instance.stage.stageHeight
+        display.anchorOffsetX = 0
+        display.anchorOffsetY = display.height / 2
+        body.userData = [display]
+        this.addChild(display)
+
+        Common.B2Box.world.CreateBody(body).CreateFixture(fixDef)
+    }
 
     private initWorld():void {
         egret.Ticker.getInstance().register(dt => {
-            if (dt < 10) return
-            if (dt > 1000) return
+            Common.B2Box.world.Step(1/ 60, 8, 3)
+            Common.B2Box.world.ClearForces()
+            
+            let bodies = Common.B2Box.world['m_island']['m_bodies'] || []
+            bodies.forEach(body => {
+                if (body && body.GetPosition && body.GetType() !== Common.B2Box.b2Body.b2_staticBody) {
+                    let pos = body.GetPosition()
 
-            Common.B2Box.world.Step(dt / 1000, 10, 10)
-
-
-            // let height:number = egret.MainContext.instance.stage.stageHeight
-            // this.world.bodies.forEach(body => {
-            //     body.displays.forEach(box => {
-            //         if (box) {
-            //             box.x = body.position[0]
-            //             box.y = height - body.position[1]
-            //             box.rotation = 360 - body.angle * 180 / Math.PI
-            //         }
-            //     })
-            // })
+                    let userData = body.GetUserData() || []
+                    userData.forEach(display => {
+                        display.x = pos.x
+                        display.y = pos.y
+                    })
+                }
+            })
         }, this)
     }
 
     private init():void {
         this.initWorld()
-        // this.initPlane() 
+        this.initPlane()
         
         // this.initMap()
         // this.initPerson()
@@ -71,34 +87,41 @@ class Assembly extends egret.Sprite {
         //     body.position = [body.position[0] + 10, body.position[1]]
         // }, 500)
 
-        let body = new Common.B2Box.b2BodyDef()
-        body.type = Common.B2Box.b2Body.b2_dynamicBody
-        body.position.Set(10 / 30, 100 / 30)
+        let getBody = () => {
+            let body = new Common.B2Box.b2BodyDef()
+            body.type = Common.B2Box.b2Body.b2_dynamicBody
+            body.position.Set(100 / 30, 100 / 30)
 
-        let fixDef = new Common.B2Box.b2FixtureDef()
-        fixDef.density = 1.0
-        fixDef.friction = 0.5
-        fixDef.restitution = 0.2
+            let fixDef = new Common.B2Box.b2FixtureDef()
+            fixDef.density = 1.0
+            fixDef.friction = 0.6
+            fixDef.restitution = 0.8
 
-        let shape = new Common.B2Box.b2PolygonShape()
-        shape.SetAsBox(100 / 30, 100 / 30)
-        fixDef.shape = shape
+            let shape = new Common.B2Box.b2PolygonShape()
+            shape.SetAsBox(100 / 30, 100 / 30)
+            fixDef.shape = shape
+            
+            return {
+                body,
+                fixDef
+            }
+        }
 
-        body.userData = 'arno_1'
-        Common.B2Box.world.CreateBody(body).CreateFixture(fixDef)
-        body.userData = 'arno_2'
-        Common.B2Box.world.CreateBody(body).CreateFixture(fixDef)
-        body.userData = 'arno_3'
-        Common.B2Box.world.CreateBody(body).CreateFixture(fixDef)
-
+        let {body, fixDef} = getBody()
         let display = new Common.TextureBitmap('bg_jpg').getBitmap()
         display.width = 100
         display.height = 100
+        display.anchorOffsetX = 0
+        display.anchorOffsetY = display.height
+        body.userData = [display]
         this.addChild(display)
 
+        let body1 = Common.B2Box.world.CreateBody(body)
+        let mass = new Common.B2Box.b2MassData()
+        mass.mass = 40
+        body1.SetMassData(mass)
+        body1.CreateFixture(fixDef)
 
-        console.log(Common.B2Box.world.GetBodyList())
-        
         // display.width = (<p2.Box>box).width
         // display.height = (<p2.Box>box).height
 
@@ -107,7 +130,7 @@ class Assembly extends egret.Sprite {
 
         // body.displays = [display]
         // this.addChild(display)
-        // this.world.addBody(body)
+        // this.world.addBody(body)       
     }
 
     private initMap():void {

@@ -17,37 +17,48 @@ var Assembly = (function (_super) {
         _this.init();
         return _this;
     }
-    // private initPlane():void {
-    //     let plane:p2.Plane = new p2.Plane()
-    //     let planeBody:p2.Body = new p2.Body({
-    //         position: [0, 0]
-    //     })
-    //     planeBody.addShape(plane)
-    //     planeBody.displays = []
-    //     this.world.addBody(planeBody)
-    // }
+    Assembly.prototype.initPlane = function () {
+        var body = new Common.B2Box.b2BodyDef();
+        body.position.Set(0, egret.MainContext.instance.stage.stageHeight);
+        body.type = Common.B2Box.b2Body.b2_staticBody;
+        var fixDef = new Common.B2Box.b2FixtureDef();
+        // fixDef.density = 1.0
+        // fixDef.friction = 0.5
+        // fixDef.restitution = 0.2
+        var shape = new Common.B2Box.b2PolygonShape();
+        shape.SetAsBox(320 / 30, 10 / 30);
+        fixDef.shape = shape;
+        var display = new Common.TextureBitmap('brick_png').getBitmap();
+        display.width = 320;
+        display.height = 10;
+        display.x = 0;
+        display.y = egret.MainContext.instance.stage.stageHeight;
+        display.anchorOffsetX = 0;
+        display.anchorOffsetY = display.height / 2;
+        body.userData = [display];
+        this.addChild(display);
+        Common.B2Box.world.CreateBody(body).CreateFixture(fixDef);
+    };
     Assembly.prototype.initWorld = function () {
         egret.Ticker.getInstance().register(function (dt) {
-            if (dt < 10)
-                return;
-            if (dt > 1000)
-                return;
-            Common.B2Box.world.Step(dt / 1000, 10, 10);
-            // let height:number = egret.MainContext.instance.stage.stageHeight
-            // this.world.bodies.forEach(body => {
-            //     body.displays.forEach(box => {
-            //         if (box) {
-            //             box.x = body.position[0]
-            //             box.y = height - body.position[1]
-            //             box.rotation = 360 - body.angle * 180 / Math.PI
-            //         }
-            //     })
-            // })
+            Common.B2Box.world.Step(1 / 60, 8, 3);
+            Common.B2Box.world.ClearForces();
+            var bodies = Common.B2Box.world['m_island']['m_bodies'] || [];
+            bodies.forEach(function (body) {
+                if (body && body.GetPosition && body.GetType() !== Common.B2Box.b2Body.b2_staticBody) {
+                    var pos_1 = body.GetPosition();
+                    var userData = body.GetUserData() || [];
+                    userData.forEach(function (display) {
+                        display.x = pos_1.x;
+                        display.y = pos_1.y;
+                    });
+                }
+            });
         }, this);
     };
     Assembly.prototype.init = function () {
         this.initWorld();
-        // this.initPlane() 
+        this.initPlane();
         // this.initMap()
         // this.initPerson()
         // this.initControlPanel()
@@ -66,34 +77,42 @@ var Assembly = (function (_super) {
         // window.setInterval(_ => {
         //     body.position = [body.position[0] + 10, body.position[1]]
         // }, 500)
-        var body = new Common.B2Box.b2BodyDef();
-        body.type = Common.B2Box.b2Body.b2_dynamicBody;
-        body.position.Set(10 / 30, 100 / 30);
-        var fixDef = new Common.B2Box.b2FixtureDef();
-        fixDef.density = 1.0;
-        fixDef.friction = 0.5;
-        fixDef.restitution = 0.2;
-        var shape = new Common.B2Box.b2PolygonShape();
-        shape.SetAsBox(100 / 30, 100 / 30);
-        fixDef.shape = shape;
-        body.userData = 'arno_1';
-        Common.B2Box.world.CreateBody(body).CreateFixture(fixDef);
-        body.userData = 'arno_2';
-        Common.B2Box.world.CreateBody(body).CreateFixture(fixDef);
-        body.userData = 'arno_3';
-        Common.B2Box.world.CreateBody(body).CreateFixture(fixDef);
+        var getBody = function () {
+            var body = new Common.B2Box.b2BodyDef();
+            body.type = Common.B2Box.b2Body.b2_dynamicBody;
+            body.position.Set(100 / 30, 100 / 30);
+            var fixDef = new Common.B2Box.b2FixtureDef();
+            fixDef.density = 1.0;
+            fixDef.friction = 0.6;
+            fixDef.restitution = 0.8;
+            var shape = new Common.B2Box.b2PolygonShape();
+            shape.SetAsBox(100 / 30, 100 / 30);
+            fixDef.shape = shape;
+            return {
+                body: body,
+                fixDef: fixDef
+            };
+        };
+        var _a = getBody(), body = _a.body, fixDef = _a.fixDef;
         var display = new Common.TextureBitmap('bg_jpg').getBitmap();
         display.width = 100;
         display.height = 100;
+        display.anchorOffsetX = 0;
+        display.anchorOffsetY = display.height;
+        body.userData = [display];
         this.addChild(display);
-        console.log(Common.B2Box.world.GetBodyList(), z);
+        var body1 = Common.B2Box.world.CreateBody(body);
+        var mass = new Common.B2Box.b2MassData();
+        mass.mass = 40;
+        body1.SetMassData(mass);
+        body1.CreateFixture(fixDef);
         // display.width = (<p2.Box>box).width
         // display.height = (<p2.Box>box).height
         // display.anchorOffsetX = display.width / 2
         // display.anchorOffsetY = display.height / 2
         // body.displays = [display]
         // this.addChild(display)
-        // this.world.addBody(body)
+        // this.world.addBody(body)       
     };
     Assembly.prototype.initMap = function () {
         this.map = new Models.Map.MapKernel();

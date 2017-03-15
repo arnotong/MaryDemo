@@ -23,7 +23,7 @@ var Common;
     B2Box.b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
     B2Box.b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
     B2Box.b2MouseJointDef = Box2D.Dynamics.Joints.b2MouseJointDef;
-    B2Box.world = new Box2D.Dynamics.b2World(new Box2D.Common.Math.b2Vec2(0, 10), true);
+    B2Box.world = new Box2D.Dynamics.b2World(new Box2D.Common.Math.b2Vec2(0, 9.81), true);
     Common.B2Box = B2Box;
     __reflect(B2Box.prototype, "Common.B2Box");
 })(Common || (Common = {}));
