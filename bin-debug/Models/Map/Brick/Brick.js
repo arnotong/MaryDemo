@@ -12,47 +12,64 @@ var Models;
     (function (Map) {
         var Bricks;
         (function (Bricks) {
-            var Brick = (function (_super) {
-                __extends(Brick, _super);
-                function Brick(resName, bitmapW, bitmapH, xNum, yNum) {
+            var BrickKernel = (function (_super) {
+                __extends(BrickKernel, _super);
+                // private world = Common.GlobalWorld.world
+                function BrickKernel(brickData) {
                     var _this = _super.call(this) || this;
-                    _this.xNum = 0;
-                    _this.yNum = 0;
-                    _this.resName = null;
-                    _this.bitmapW = 0;
-                    _this.bitmapH = 0;
-                    _this.resName = resName;
-                    _this.bitmapW = bitmapW;
-                    _this.bitmapH = bitmapH;
-                    _this.xNum = xNum;
-                    _this.yNum = yNum;
-                    _this.setSize();
-                    _this.x = 0;
-                    _this.y = 0;
-                    _this.loadTexture();
+                    _this.brickData = null;
+                    _this.resName = 'brick_png';
+                    _this.brickData = brickData;
+                    _this.width = 0;
+                    _this.height = 0;
+                    _this.initBrick();
                     return _this;
                 }
-                Brick.prototype.setSize = function () {
-                    this.width = this.bitmapW * this.xNum;
-                    this.height = this.bitmapH * this.yNum;
+                BrickKernel.prototype.setBrickPos = function () {
+                    // this.height = this.brickData.height
+                    this.x = 0;
+                    this.y = 0; // egret.MainContext.instance.stage.stageHeight - this.height
                 };
-                Brick.prototype.getBitmap = function (x, y) {
+                BrickKernel.prototype.initBrick = function () {
+                    this.setBrickPos();
+                    this.setBricks();
+                };
+                BrickKernel.prototype.setBricks = function () {
+                    var _this = this;
                     var bitmap = new Common.TextureBitmap(this.resName).getBitmap();
-                    bitmap.x = x;
-                    bitmap.y = y;
-                    return bitmap;
-                };
-                Brick.prototype.loadTexture = function () {
-                    for (var i = 0; i < this.xNum; i++) {
-                        for (var j = 0; j < this.yNum; j++) {
-                            this.addChild(this.getBitmap(this.bitmapW * i, this.bitmapH * j));
+                    var bitmapW = bitmap.width;
+                    var bitmapH = bitmap.height;
+                    var preEndX = 0;
+                    this.brickData.data.forEach(function (map) {
+                        var width = bitmapW * map.w;
+                        var height = bitmapH * map.h;
+                        if (map.land) {
+                            _this.addBrickToWorld(width, height, preEndX, height / 2);
                         }
-                    }
+                        preEndX = width + preEndX;
+                    });
                 };
-                return Brick;
+                BrickKernel.prototype.addBrickToWorld = function (width, height, x, y) {
+                    // let body = new p2.Body({
+                    //     mass: 0,
+                    //     position: [x, y]
+                    // })
+                    // let box = new p2.Box({ width: width, height: height })
+                    // body.addShape(box)
+                    // let display:egret.Bitmap = new Common.TextureBitmap(this.resName).getBitmap()
+                    // display.fillMode = egret.BitmapFillMode.REPEAT
+                    // display.width = width
+                    // display.height = height
+                    // display.anchorOffsetX = width / 2
+                    // display.anchorOffsetY = height / 2
+                    // body.displays = [display]
+                    // this.addChild(display)
+                    // this.world.addBody(body)
+                };
+                return BrickKernel;
             }(egret.Sprite));
-            Bricks.Brick = Brick;
-            __reflect(Brick.prototype, "Models.Map.Bricks.Brick");
+            Bricks.BrickKernel = BrickKernel;
+            __reflect(BrickKernel.prototype, "Models.Map.Bricks.BrickKernel");
         })(Bricks = Map.Bricks || (Map.Bricks = {}));
     })(Map = Models.Map || (Models.Map = {}));
 })(Models || (Models = {}));
