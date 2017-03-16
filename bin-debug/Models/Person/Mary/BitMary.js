@@ -16,13 +16,11 @@ var Models;
                 __extends(BitMary, _super);
                 function BitMary() {
                     var _this = _super.call(this) || this;
-                    _this.textures = [];
                     _this.initMary();
                     return _this;
                 }
                 BitMary.prototype.initMary = function () {
                     this.setSize();
-                    this.movieClip && this.addChild(this.movieClip);
                 };
                 BitMary.prototype.setSize = function () {
                     this.width = 32;
@@ -30,7 +28,7 @@ var Models;
                 };
                 /**
                  * 重写
-                 * 初始化各个方向的动画
+                 * 初始化 全部的 movieClip
                  */
                 BitMary.prototype.initAllMovieClip = function () {
                     this.leftMovieClip = this.getMovieClipData(RES.getRes('mary_big_left_json'), RES.getRes('mary_big_left_png'), 'mary_big_left');

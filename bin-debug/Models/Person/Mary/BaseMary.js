@@ -14,6 +14,8 @@ var Models;
         (function (Mary) {
             var BaseMary = (function (_super) {
                 __extends(BaseMary, _super);
+                // boxBody
+                // protected boxBody:Common.B2Box.b2
                 function BaseMary() {
                     var _this = _super.call(this) || this;
                     // movieclip
@@ -38,6 +40,9 @@ var Models;
                 BaseMary.prototype.getHeight = function () {
                     return this.height;
                 };
+                /**
+                 *
+                 */
                 /**
                  * 设置 MovieClip
                  */

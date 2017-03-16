@@ -20,11 +20,6 @@ var Models;
             }
             PersonKernel.prototype.initMary = function () {
                 this.createMary();
-                this.setPos();
-            };
-            PersonKernel.prototype.setPos = function () {
-                this.x = 0;
-                this.y = egret.MainContext.instance.stage.stageHeight - 60 - this.maryObj.getHeight();
             };
             PersonKernel.prototype.createMary = function () {
                 this.maryObj = new Person.Mary.BitMary();

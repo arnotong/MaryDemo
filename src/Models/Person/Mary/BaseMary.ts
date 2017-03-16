@@ -15,6 +15,9 @@ module Models.Person.Mary {
         protected upSpeed:number = 2
         protected downSpeed:number = 2
 
+        // boxBody
+        // protected boxBody:Common.B2Box.b2
+
         public constructor() {
             super()
 
@@ -29,6 +32,10 @@ module Models.Person.Mary {
         public getHeight():number {
             return this.height
         }
+
+        /**
+         * 
+         */
 
         /**
          * 设置 MovieClip

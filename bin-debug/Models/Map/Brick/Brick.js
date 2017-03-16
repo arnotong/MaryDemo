@@ -39,32 +39,37 @@ var Models;
                     var bitmap = new Common.TextureBitmap(this.resName).getBitmap();
                     var bitmapW = bitmap.width;
                     var bitmapH = bitmap.height;
+                    var stageHeight = egret.MainContext.instance.stage.stageHeight;
+                    console.log(stageHeight);
                     var preEndX = 0;
                     this.brickData.data.forEach(function (map) {
                         var width = bitmapW * map.w;
                         var height = bitmapH * map.h;
                         if (map.land) {
-                            _this.addBrickToWorld(width, height, preEndX, height / 2);
+                            _this.addBrickToWorld(width, height, preEndX + width / 2, stageHeight - height / 2);
                         }
                         preEndX = width + preEndX;
                     });
                 };
                 BrickKernel.prototype.addBrickToWorld = function (width, height, x, y) {
-                    // let body = new p2.Body({
-                    //     mass: 0,
-                    //     position: [x, y]
-                    // })
-                    // let box = new p2.Box({ width: width, height: height })
-                    // body.addShape(box)
-                    // let display:egret.Bitmap = new Common.TextureBitmap(this.resName).getBitmap()
-                    // display.fillMode = egret.BitmapFillMode.REPEAT
-                    // display.width = width
-                    // display.height = height
-                    // display.anchorOffsetX = width / 2
-                    // display.anchorOffsetY = height / 2
-                    // body.displays = [display]
-                    // this.addChild(display)
-                    // this.world.addBody(body)
+                    var body = new Common.B2Box.b2BodyDef();
+                    body.type = Common.B2Box.b2Body.b2_staticBody;
+                    body.position.Set(Common.B2Box.converNum(x), Common.B2Box.converNum(y));
+                    var shape = new Common.B2Box.b2PolygonShape();
+                    shape.SetAsBox(Common.B2Box.converNum(width) / 2, Common.B2Box.converNum(height) / 2);
+                    var fixDef = new Common.B2Box.b2FixtureDef();
+                    fixDef.shape = shape;
+                    var display = new Common.TextureBitmap(this.resName).getBitmap();
+                    display.fillMode = egret.BitmapFillMode.REPEAT;
+                    display.width = width;
+                    display.height = height;
+                    display.anchorOffsetX = width / 2;
+                    display.anchorOffsetY = height / 2;
+                    display.x = x;
+                    display.y = y;
+                    body.userData = [display];
+                    this.addChild(display);
+                    Common.B2Box.world.CreateBody(body).CreateFixture(fixDef);
                 };
                 return BrickKernel;
             }(egret.Sprite));

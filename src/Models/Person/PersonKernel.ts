@@ -10,12 +10,6 @@ namespace Models.Person {
 
         private initMary():void {
             this.createMary()
-            this.setPos()
-        }
-
-        private setPos():void {
-            this.x = 0
-            this.y = egret.MainContext.instance.stage.stageHeight - 60 - this.maryObj.getHeight()
         }
 
         private createMary():void {

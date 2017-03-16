@@ -32,13 +32,16 @@ namespace Models.Map.Bricks {
             let bitmapW:number = bitmap.width
             let bitmapH:number = bitmap.height
 
+            let stageHeight = egret.MainContext.instance.stage.stageHeight
+            console.log(stageHeight)
+
             let preEndX = 0
             this.brickData.data.forEach(map => {
                 let width:number = bitmapW * map.w
                 let height:number = bitmapH * map.h
 
                 if (map.land) {
-                    this.addBrickToWorld(width, height, preEndX, height / 2)
+                    this.addBrickToWorld(width, height, preEndX + width / 2, stageHeight - height / 2)
                 }
 
                 preEndX = width + preEndX
@@ -46,24 +49,29 @@ namespace Models.Map.Bricks {
         }
 
         private addBrickToWorld(width:number, height:number, x:number, y:number):void {
-            // let body = new p2.Body({
-            //     mass: 0,
-            //     position: [x, y]
-            // })
-            // let box = new p2.Box({ width: width, height: height })
-            // body.addShape(box)
+            let body = new Common.B2Box.b2BodyDef()
+            body.type = Common.B2Box.b2Body.b2_staticBody
+            body.position.Set(Common.B2Box.converNum(x), Common.B2Box.converNum(y))
 
-            // let display:egret.Bitmap = new Common.TextureBitmap(this.resName).getBitmap()
-            // display.fillMode = egret.BitmapFillMode.REPEAT
-            // display.width = width
-            // display.height = height
-            // display.anchorOffsetX = width / 2
-            // display.anchorOffsetY = height / 2
+            let shape = new Common.B2Box.b2PolygonShape()
+            shape.SetAsBox(Common.B2Box.converNum(width) / 2, Common.B2Box.converNum(height) / 2)
 
-            // body.displays = [display]
+            let fixDef = new Common.B2Box.b2FixtureDef()
+            fixDef.shape = shape
 
-            // this.addChild(display)
-            // this.world.addBody(body)
+            let display:egret.Bitmap = new Common.TextureBitmap(this.resName).getBitmap()
+            display.fillMode = egret.BitmapFillMode.REPEAT
+            display.width = width
+            display.height = height
+            display.anchorOffsetX = width / 2
+            display.anchorOffsetY = height / 2
+            display.x = x
+            display.y = y
+
+            body.userData = [display]
+
+            this.addChild(display)
+            Common.B2Box.world.CreateBody(body).CreateFixture(fixDef)
         }
      }
 }
