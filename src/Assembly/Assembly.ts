@@ -2,10 +2,8 @@ class Assembly extends egret.Sprite {
     private map:Models.Map.MapKernel = null
     private person:Models.Person.PersonKernel = null
     private control:Views.ControlPanel = null
-
+    
     private isDebug:boolean = false
-
-    // private world:p2.World = Common.GlobalWorld.world
 
     public constructor() {
         super()
@@ -19,21 +17,26 @@ class Assembly extends egret.Sprite {
             Common.B2Box.world.ClearForces()
             Common.B2Box.world.DrawDebugData()
             
-            let bodies = Common.B2Box.world['m_island']['m_bodies'] || []
-            bodies.forEach(body => {
-                if (body && body.GetPosition && body.GetType() !== Common.B2Box.b2Body.b2_staticBody) {
-                    let pos = body.GetPosition()
-                    let angle = body.GetAngle()
-
-                    let userData = body.GetUserData() || []
-                    userData.forEach(display => {
-                        display.x = pos.x * 30
-                        display.y = pos.y * 30
-                        display.rotation = Math.round(angle * 180 / Math.PI)
-                    })
-                }
-            })
+            this.updateBoxBody(Common.B2Box.world.GetBodyList())
         }, this)
+    }
+
+    private updateBoxBody(body:Box2D.Dynamics.b2Body) {
+        if (body) {
+            if (body.GetPosition) {
+                let pos = body.GetPosition()
+                let angle = body.GetAngle()
+
+                let userData = body.GetUserData() || []
+                userData.forEach(display => {
+                    display.x = pos.x * 30
+                    display.y = pos.y * 30
+                    display.rotation = Math.round(angle * 180 / Math.PI)
+                })
+            }
+
+            this.updateBoxBody(body.GetNext())
+        }
     }
 
     private init():void {
@@ -53,10 +56,10 @@ class Assembly extends egret.Sprite {
     private setDebugDraw():void {
         if (!this.isDebug) return
 
-        let draw = new Common.B2Box.b2DebugDraw()
+        let draw:Box2D.Dynamics.b2DebugDraw = new Box2D.Dynamics.b2DebugDraw()
         draw.SetSprite(egret.MainContext.instance.stage.$screen['canvas'].getContext('2d'))
         draw.SetDrawScale(30)
-        draw.SetFlags(Common.B2Box.b2DebugDraw.e_shapeBit)
+        draw.SetFlags(Box2D.Dynamics.b2DebugDraw.e_shapeBit)
         draw.SetFillAlpha(0.3)
         Common.B2Box.world.SetDebugDraw(draw)
     }

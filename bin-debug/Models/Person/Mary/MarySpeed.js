@@ -9,9 +9,9 @@ var Models;
         (function (Mary) {
             var MarySpeed = (function () {
                 function MarySpeed(min, max, acc) {
-                    this.min = 0.1;
-                    this.max = 2.0;
-                    this.acc = 0.2;
+                    this.min = 1.0;
+                    this.max = 6.0;
+                    this.acc = 1.0;
                     this.speed = 0;
                     this.setSpeedData(min, max, acc);
                 }

@@ -43,23 +43,6 @@ var Models;
                 this.brick = new Map.Bricks.BrickKernel(this.mapJson.brick);
                 this.addChild(this.brick);
             };
-            /**
-             * 获取 x 对应的 y 值
-             */
-            MapKernel.prototype.getCurrY = function (x) {
-            };
-            /**
-             * 获取地图当前位置
-             */
-            MapKernel.prototype.getCurrPos = function () {
-            };
-            /**
-             * 设置 地图 的位置
-             */
-            MapKernel.prototype.setMapPos = function (x, y) {
-                this.x = x == null ? this.x : x;
-                this.y = y == null ? this.y : y;
-            };
             return MapKernel;
         }(egret.Sprite));
         Map.MapKernel = MapKernel;

@@ -55,5 +55,10 @@ namespace Models.Person.Mary {
          * 获取高度
          */
         getHeight(event?:egret.Event)
+
+        /**
+         * 获取 pos
+         */
+        getPos():Box2D.Common.Math.b2Vec2
     }
 }

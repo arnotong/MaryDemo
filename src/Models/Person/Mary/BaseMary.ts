@@ -16,12 +16,17 @@ module Models.Person.Mary {
         protected downSpeed:number = 2
 
         // boxBody
-        // protected boxBody:Common.B2Box.b2
+        protected boxBody:Box2D.Dynamics.b2BodyDef = new Box2D.Dynamics.b2BodyDef()
+        protected boxFixDef:Box2D.Dynamics.b2FixtureDef = new Box2D.Dynamics.b2FixtureDef()
+        protected parcelBody:Box2D.Dynamics.b2Body = null
 
         public constructor() {
             super()
 
+            this.initSize()
+            this.initAnchor()
             this.initAllMovieClip()
+            this.initBodyFix()
             
             this.movieClip = this.rightMovieClip
         }
@@ -34,8 +39,50 @@ module Models.Person.Mary {
         }
 
         /**
-         * 
+         * 获取 positon
          */
+        public getPos():Box2D.Common.Math.b2Vec2 {
+            return this.parcelBody.GetPosition()
+        }
+
+        /**
+         * 可重写
+         * 设置 大小
+         */
+        protected initSize():void {
+            
+        }
+        /**
+         * 设置 中心点
+         */
+        protected initAnchor():void {
+            this.anchorOffsetX = this.width / 2
+            this.anchorOffsetY = this.height / 2
+        }
+
+        /**
+         * 初始化 b2BodyDef 和 b2FixtureDef
+         */
+        private initBodyFix():void {
+            this.boxBody.userData = [this]
+            this.boxBody.type = Box2D.Dynamics.b2Body.b2_dynamicBody
+            this.boxBody.fixedRotation = true
+            this.boxBody.position.Set(Common.B2Box.converNum(this.width), Common.B2Box.converNum(Common.B2Box.planeHeight()))
+            
+            this.boxFixDef.density = 50
+            this.boxFixDef.friction = 80
+            this.boxFixDef.restitution = 0
+        }
+        /**
+         * 添加 shape 包裹形状
+         */
+        protected addShapeToBox(shape: Box2D.Collision.Shapes.b2Shape):void {
+            this.boxFixDef.shape = shape
+
+            this.parcelBody = Common.B2Box.world.CreateBody(this.boxBody)
+            this.parcelBody.CreateFixture(this.boxFixDef)
+            this.parcelBody.SetSleepingAllowed(false)
+        }
 
         /**
          * 设置 MovieClip
@@ -57,7 +104,7 @@ module Models.Person.Mary {
          /**
          * 设置方向的 MovieClip
          */
-        private setMovieClipData(movieClip:egret.MovieClip) {
+        private setMovieClipData(movieClip:egret.MovieClip):void {
             if (this.movieClip.name === movieClip.name) return
             
             this.removeChild(this.movieClip)
@@ -111,10 +158,19 @@ module Models.Person.Mary {
         public left(event?:egret.Event) {
             this.setLeftMovieClip()
 
-            this.x -= this.leftSpeed.getSpeed()
+            // let force:Box2D.Common.Math.b2Vec2 = new Box2D.Common.Math.b2Vec2(-50, 0)
+            // let center:Box2D.Common.Math.b2Vec2 = this.parcelBody.GetWorldCenter()
+            // this.parcelBody.ApplyImpulse(force, center)
+
+            // if (this.parcelBody.GetLinearVelocity().x > 10) {
+            //     this.parcelBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(10, 0))
+            // }
+
+            this.parcelBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(-this.leftSpeed.getSpeed(), 0))
+
+
+             // this.x -= this.leftSpeed.getSpeed()
             this.gotoAndPlay()
-            
-            this.moveDispatchEvent()
         }
 
         /**
@@ -123,10 +179,9 @@ module Models.Person.Mary {
         public right(event?:egret.Event) {
             this.setRightMovieClip()
 
-            this.x += this.rightSpeed.getSpeed()
-            this.gotoAndPlay()
+            this.parcelBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(this.rightSpeed.getSpeed(), 0))
 
-            this.moveDispatchEvent()
+            this.gotoAndPlay()
         }
 
         /**
@@ -185,13 +240,6 @@ module Models.Person.Mary {
          */
         public stopSuper(event?:egret.Event) {
 
-        }
-
-        /**
-         * 人物移动 事件
-         */
-        protected moveDispatchEvent():void {
-            Common.GlobalDispatch.dispatchEvent(Common.BaseEvent.PERSON_MOVE)
         }
     }
 }

@@ -1,8 +1,8 @@
 namespace Models.Person.Mary {
     export class MarySpeed {
-        private min:number = 0.1
-        private max:number = 2.0
-        private acc:number = 0.2
+        private min:number = 1.0
+        private max:number = 6.0
+        private acc:number = 1.0
         private speed:number = 0
 
         constructor (min?:number, max?:number, acc?:number) {

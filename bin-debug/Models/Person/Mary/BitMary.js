@@ -16,13 +16,15 @@ var Models;
                 __extends(BitMary, _super);
                 function BitMary() {
                     var _this = _super.call(this) || this;
+                    _this.shape = null;
                     _this.initMary();
+                    _this.initShape();
                     return _this;
                 }
                 BitMary.prototype.initMary = function () {
-                    this.setSize();
+                    this.addChild(this.movieClip);
                 };
-                BitMary.prototype.setSize = function () {
+                BitMary.prototype.initSize = function () {
                     this.width = 32;
                     this.height = 64;
                 };
@@ -33,6 +35,14 @@ var Models;
                 BitMary.prototype.initAllMovieClip = function () {
                     this.leftMovieClip = this.getMovieClipData(RES.getRes('mary_big_left_json'), RES.getRes('mary_big_left_png'), 'mary_big_left');
                     this.rightMovieClip = this.getMovieClipData(RES.getRes('mary_big_right_json'), RES.getRes('mary_big_right_png'), 'mary_big_right');
+                };
+                /**
+                 * 初始化 包裹盒
+                 */
+                BitMary.prototype.initShape = function () {
+                    this.shape = new Box2D.Collision.Shapes.b2PolygonShape();
+                    this.shape.SetAsBox(Common.B2Box.converNum(this.width / 2), Common.B2Box.converNum(this.height / 2));
+                    this.addShapeToBox(this.shape);
                 };
                 return BitMary;
             }(Mary.BaseMary));

@@ -14,8 +14,6 @@ var Models;
         (function (Mary) {
             var BaseMary = (function (_super) {
                 __extends(BaseMary, _super);
-                // boxBody
-                // protected boxBody:Common.B2Box.b2
                 function BaseMary() {
                     var _this = _super.call(this) || this;
                     // movieclip
@@ -30,7 +28,14 @@ var Models;
                     _this.rightSpeed = new Mary.MarySpeed();
                     _this.upSpeed = 2;
                     _this.downSpeed = 2;
+                    // boxBody
+                    _this.boxBody = new Box2D.Dynamics.b2BodyDef();
+                    _this.boxFixDef = new Box2D.Dynamics.b2FixtureDef();
+                    _this.parcelBody = null;
+                    _this.initSize();
+                    _this.initAnchor();
                     _this.initAllMovieClip();
+                    _this.initBodyFix();
                     _this.movieClip = _this.rightMovieClip;
                     return _this;
                 }
@@ -41,8 +46,45 @@ var Models;
                     return this.height;
                 };
                 /**
-                 *
+                 * 获取 positon
                  */
+                BaseMary.prototype.getPos = function () {
+                    return this.parcelBody.GetPosition();
+                };
+                /**
+                 * 可重写
+                 * 设置 大小
+                 */
+                BaseMary.prototype.initSize = function () {
+                };
+                /**
+                 * 设置 中心点
+                 */
+                BaseMary.prototype.initAnchor = function () {
+                    this.anchorOffsetX = this.width / 2;
+                    this.anchorOffsetY = this.height / 2;
+                };
+                /**
+                 * 初始化 b2BodyDef 和 b2FixtureDef
+                 */
+                BaseMary.prototype.initBodyFix = function () {
+                    this.boxBody.userData = [this];
+                    this.boxBody.type = Box2D.Dynamics.b2Body.b2_dynamicBody;
+                    this.boxBody.fixedRotation = true;
+                    this.boxBody.position.Set(Common.B2Box.converNum(this.width), Common.B2Box.converNum(Common.B2Box.planeHeight()));
+                    this.boxFixDef.density = 50;
+                    this.boxFixDef.friction = 80;
+                    this.boxFixDef.restitution = 0;
+                };
+                /**
+                 * 添加 shape 包裹形状
+                 */
+                BaseMary.prototype.addShapeToBox = function (shape) {
+                    this.boxFixDef.shape = shape;
+                    this.parcelBody = Common.B2Box.world.CreateBody(this.boxBody);
+                    this.parcelBody.CreateFixture(this.boxFixDef);
+                    this.parcelBody.SetSleepingAllowed(false);
+                };
                 /**
                  * 设置 MovieClip
                  */
@@ -109,18 +151,23 @@ var Models;
                  */
                 BaseMary.prototype.left = function (event) {
                     this.setLeftMovieClip();
-                    this.x -= this.leftSpeed.getSpeed();
+                    // let force:Box2D.Common.Math.b2Vec2 = new Box2D.Common.Math.b2Vec2(-50, 0)
+                    // let center:Box2D.Common.Math.b2Vec2 = this.parcelBody.GetWorldCenter()
+                    // this.parcelBody.ApplyImpulse(force, center)
+                    // if (this.parcelBody.GetLinearVelocity().x > 10) {
+                    //     this.parcelBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(10, 0))
+                    // }
+                    this.parcelBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(-this.leftSpeed.getSpeed(), 0));
+                    // this.x -= this.leftSpeed.getSpeed()
                     this.gotoAndPlay();
-                    this.moveDispatchEvent();
                 };
                 /**
                  * 向右走
                  */
                 BaseMary.prototype.right = function (event) {
                     this.setRightMovieClip();
-                    this.x += this.rightSpeed.getSpeed();
+                    this.parcelBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(this.rightSpeed.getSpeed(), 0));
                     this.gotoAndPlay();
-                    this.moveDispatchEvent();
                 };
                 /**
                  * 跳
@@ -165,12 +212,6 @@ var Models;
                  * 停止 子弹
                  */
                 BaseMary.prototype.stopSuper = function (event) {
-                };
-                /**
-                 * 人物移动 事件
-                 */
-                BaseMary.prototype.moveDispatchEvent = function () {
-                    Common.GlobalDispatch.dispatchEvent(Common.BaseEvent.PERSON_MOVE);
                 };
                 return BaseMary;
             }(egret.Sprite));

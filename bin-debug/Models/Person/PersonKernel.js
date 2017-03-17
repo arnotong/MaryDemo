@@ -74,10 +74,7 @@ var Models;
                 this.maryObj.stopDrill(event);
             };
             PersonKernel.prototype.getPos = function () {
-                return {
-                    x: this.x,
-                    y: this.y
-                };
+                return this.maryObj.getPos();
             };
             return PersonKernel;
         }(egret.Sprite));

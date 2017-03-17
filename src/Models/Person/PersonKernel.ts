@@ -73,11 +73,8 @@ namespace Models.Person {
             this.maryObj.stopDrill(event)
         }
 
-        public getPos() {
-            return {
-                x: this.x,
-                y: this.y
-            }
+        public getPos():Box2D.Common.Math.b2Vec2 {
+            return this.maryObj.getPos()
         }
     }
 }

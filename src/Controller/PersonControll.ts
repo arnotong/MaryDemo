@@ -4,6 +4,8 @@ namespace Controller {
 
         private person:Models.Person.PersonKernel = null
         private map:Models.Map.MapKernel = null
+        
+        private personOldPos:Box2D.Common.Math.b2Vec2 = null
 
         // 事件列表
         private listenerEventTable = [
@@ -31,9 +33,10 @@ namespace Controller {
         constructor (person:Models.Person.PersonKernel, map:Models.Map.MapKernel) {
             this.person = person
             this.map = map
+
+            this.personOldPos = this.person.getPos()
             
             this.listenerEvent()
-            this.listenerPersonMove()
         }
 
         private listenerEvent():void {
@@ -48,25 +51,19 @@ namespace Controller {
             })
         }
 
-        private listenerPersonMove():void {
-            Common.GlobalDispatch.addEventListener(Common.BaseEvent.PERSON_MOVE, this.personMove, this)
-        }
-
-        private personMove(event:egret.Event) {
-            let x = this.person.x - egret.MainContext.instance.stage.stageWidth / 2
-            x = x < 0 ? 0 : x
-            this.map.setMapPos(x, 0)
-        }
-
         private walkLeft(event?:egret.Event) {
             this.ticks.left.startTick(_ => {
                 this.person.left(this.formatEvent(event))
+                
+                this.moveMapForPerson()
             })
         }
 
         private walkRight(event?:egret.Event) {
             this.ticks.right.startTick(_ => {
                 this.person.right(this.formatEvent(event))
+
+                this.moveMapForPerson()
             })
         }
 
@@ -107,6 +104,44 @@ namespace Controller {
         private formatEvent(event:egret.Event):egret.Event {
             event['eventTypeName'] = Common.BaseEvent.getEvent(event.type)
             return event
+        }
+
+        /**
+         * 根据 人物 移动来移动地图
+         */
+        private moveMapForPerson():void {
+            let pos:Common.Position = this.person.getPos()
+
+            this.moveStaticBody(Common.B2Box.world.GetBodyList(), this.person.getPos())
+
+            console.log(this.person.getPos())
+
+            this.personOldPos = this.person.getPos()
+            this.count = 0
+        }
+
+        private count = 0
+
+        /**
+         * 移动 地图 上 所有静态 物品 
+         */
+        private moveStaticBody(body:Box2D.Dynamics.b2Body, personPos:Common.Position):void {
+            if (body) {
+                if(body.GetPosition && body.GetType() === Box2D.Dynamics.b2Body.b2_staticBody) {
+                    let bodyPos = body.GetPosition()
+                    bodyPos.x -= personPos.x - this.personOldPos.x
+                    console.log(personPos.x - this.personOldPos.x)
+                    
+                    if (this.count == 0)
+                        console.log(bodyPos)
+
+                    this.count ++
+
+                    body.SetPosition(bodyPos)
+                }
+
+                this.moveStaticBody(body.GetNext(), personPos)
+            }
         }
 
     }

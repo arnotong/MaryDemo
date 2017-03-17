@@ -8,7 +8,6 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Assembly = (function (_super) {
     __extends(Assembly, _super);
-    // private world:p2.World = Common.GlobalWorld.world
     function Assembly() {
         var _this = _super.call(this) || this;
         _this.map = null;
@@ -19,24 +18,28 @@ var Assembly = (function (_super) {
         return _this;
     }
     Assembly.prototype.initWorld = function () {
+        var _this = this;
         egret.Ticker.getInstance().register(function (dt) {
             Common.B2Box.world.Step(1 / 60, 10, 10);
             Common.B2Box.world.ClearForces();
             Common.B2Box.world.DrawDebugData();
-            var bodies = Common.B2Box.world['m_island']['m_bodies'] || [];
-            bodies.forEach(function (body) {
-                if (body && body.GetPosition && body.GetType() !== Common.B2Box.b2Body.b2_staticBody) {
-                    var pos_1 = body.GetPosition();
-                    var angle_1 = body.GetAngle();
-                    var userData = body.GetUserData() || [];
-                    userData.forEach(function (display) {
-                        display.x = pos_1.x * 30;
-                        display.y = pos_1.y * 30;
-                        display.rotation = Math.round(angle_1 * 180 / Math.PI);
-                    });
-                }
-            });
+            _this.updateBoxBody(Common.B2Box.world.GetBodyList());
         }, this);
+    };
+    Assembly.prototype.updateBoxBody = function (body) {
+        if (body) {
+            if (body.GetPosition) {
+                var pos_1 = body.GetPosition();
+                var angle_1 = body.GetAngle();
+                var userData = body.GetUserData() || [];
+                userData.forEach(function (display) {
+                    display.x = pos_1.x * 30;
+                    display.y = pos_1.y * 30;
+                    display.rotation = Math.round(angle_1 * 180 / Math.PI);
+                });
+            }
+            this.updateBoxBody(body.GetNext());
+        }
     };
     Assembly.prototype.init = function () {
         this.initWorld();
@@ -51,10 +54,10 @@ var Assembly = (function (_super) {
     Assembly.prototype.setDebugDraw = function () {
         if (!this.isDebug)
             return;
-        var draw = new Common.B2Box.b2DebugDraw();
+        var draw = new Box2D.Dynamics.b2DebugDraw();
         draw.SetSprite(egret.MainContext.instance.stage.$screen['canvas'].getContext('2d'));
         draw.SetDrawScale(30);
-        draw.SetFlags(Common.B2Box.b2DebugDraw.e_shapeBit);
+        draw.SetFlags(Box2D.Dynamics.b2DebugDraw.e_shapeBit);
         draw.SetFillAlpha(0.3);
         Common.B2Box.world.SetDebugDraw(draw);
     };

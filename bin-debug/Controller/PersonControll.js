@@ -8,6 +8,7 @@ var Controller;
             this.dispatchEvent = new egret.EventDispatcher();
             this.person = null;
             this.map = null;
+            this.personOldPos = null;
             // 事件列表
             this.listenerEventTable = [
                 { event: Common.BaseEvent.DIR_LEFT, handle: this.walkLeft },
@@ -28,10 +29,11 @@ var Controller;
                 up: new Common.BaseTick(),
                 down: new Common.BaseTick()
             };
+            this.count = 0;
             this.person = person;
             this.map = map;
+            this.personOldPos = this.person.getPos();
             this.listenerEvent();
-            this.listenerPersonMove();
         }
         PersonControll.prototype.listenerEvent = function () {
             var _this = this;
@@ -46,24 +48,18 @@ var Controller;
                 }
             });
         };
-        PersonControll.prototype.listenerPersonMove = function () {
-            Common.GlobalDispatch.addEventListener(Common.BaseEvent.PERSON_MOVE, this.personMove, this);
-        };
-        PersonControll.prototype.personMove = function (event) {
-            var x = this.person.x - egret.MainContext.instance.stage.stageWidth / 2;
-            x = x < 0 ? 0 : x;
-            this.map.setMapPos(x, 0);
-        };
         PersonControll.prototype.walkLeft = function (event) {
             var _this = this;
             this.ticks.left.startTick(function (_) {
                 _this.person.left(_this.formatEvent(event));
+                _this.moveMapForPerson();
             });
         };
         PersonControll.prototype.walkRight = function (event) {
             var _this = this;
             this.ticks.right.startTick(function (_) {
                 _this.person.right(_this.formatEvent(event));
+                _this.moveMapForPerson();
             });
         };
         PersonControll.prototype.walkUp = function (event) {
@@ -89,6 +85,33 @@ var Controller;
         PersonControll.prototype.formatEvent = function (event) {
             event['eventTypeName'] = Common.BaseEvent.getEvent(event.type);
             return event;
+        };
+        /**
+         * 根据 人物 移动来移动地图
+         */
+        PersonControll.prototype.moveMapForPerson = function () {
+            var pos = this.person.getPos();
+            this.moveStaticBody(Common.B2Box.world.GetBodyList(), this.person.getPos());
+            console.log(this.person.getPos());
+            this.personOldPos = this.person.getPos();
+            this.count = 0;
+        };
+        /**
+         * 移动 地图 上 所有静态 物品
+         */
+        PersonControll.prototype.moveStaticBody = function (body, personPos) {
+            if (body) {
+                if (body.GetPosition && body.GetType() === Box2D.Dynamics.b2Body.b2_staticBody) {
+                    var bodyPos = body.GetPosition();
+                    bodyPos.x -= personPos.x - this.personOldPos.x;
+                    console.log(personPos.x - this.personOldPos.x);
+                    if (this.count == 0)
+                        console.log(bodyPos);
+                    this.count++;
+                    body.SetPosition(bodyPos);
+                }
+                this.moveStaticBody(body.GetNext(), personPos);
+            }
         };
         return PersonControll;
     }());

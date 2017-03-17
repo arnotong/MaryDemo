@@ -52,12 +52,12 @@ var Models;
                     });
                 };
                 BrickKernel.prototype.addBrickToWorld = function (width, height, x, y) {
-                    var body = new Common.B2Box.b2BodyDef();
-                    body.type = Common.B2Box.b2Body.b2_staticBody;
+                    var body = new Box2D.Dynamics.b2BodyDef();
+                    body.type = Box2D.Dynamics.b2Body.b2_staticBody;
                     body.position.Set(Common.B2Box.converNum(x), Common.B2Box.converNum(y));
-                    var shape = new Common.B2Box.b2PolygonShape();
+                    var shape = new Box2D.Collision.Shapes.b2PolygonShape();
                     shape.SetAsBox(Common.B2Box.converNum(width) / 2, Common.B2Box.converNum(height) / 2);
-                    var fixDef = new Common.B2Box.b2FixtureDef();
+                    var fixDef = new Box2D.Dynamics.b2FixtureDef();
                     fixDef.shape = shape;
                     var display = new Common.TextureBitmap(this.resName).getBitmap();
                     display.fillMode = egret.BitmapFillMode.REPEAT;

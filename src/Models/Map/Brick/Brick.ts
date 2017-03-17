@@ -49,14 +49,14 @@ namespace Models.Map.Bricks {
         }
 
         private addBrickToWorld(width:number, height:number, x:number, y:number):void {
-            let body = new Common.B2Box.b2BodyDef()
-            body.type = Common.B2Box.b2Body.b2_staticBody
+            let body:Box2D.Dynamics.b2BodyDef = new Box2D.Dynamics.b2BodyDef()
+            body.type = Box2D.Dynamics.b2Body.b2_staticBody
             body.position.Set(Common.B2Box.converNum(x), Common.B2Box.converNum(y))
 
-            let shape = new Common.B2Box.b2PolygonShape()
+            let shape:Box2D.Collision.Shapes.b2PolygonShape = new Box2D.Collision.Shapes.b2PolygonShape()
             shape.SetAsBox(Common.B2Box.converNum(width) / 2, Common.B2Box.converNum(height) / 2)
 
-            let fixDef = new Common.B2Box.b2FixtureDef()
+            let fixDef:Box2D.Dynamics.b2FixtureDef = new Box2D.Dynamics.b2FixtureDef()
             fixDef.shape = shape
 
             let display:egret.Bitmap = new Common.TextureBitmap(this.resName).getBitmap()
