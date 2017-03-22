@@ -54,7 +54,8 @@ var Models;
                 BrickKernel.prototype.addBrickToWorld = function (width, height, x, y) {
                     var body = new Box2D.Dynamics.b2BodyDef();
                     body.type = Box2D.Dynamics.b2Body.b2_staticBody;
-                    body.position.Set(Common.B2Box.converNum(x), Common.B2Box.converNum(y));
+                    var pos = new Box2D.Common.Math.b2Vec2(Common.B2Box.converNum(x), Common.B2Box.converNum(y));
+                    body.position.Set(pos.x, pos.y);
                     var shape = new Box2D.Collision.Shapes.b2PolygonShape();
                     shape.SetAsBox(Common.B2Box.converNum(width) / 2, Common.B2Box.converNum(height) / 2);
                     var fixDef = new Box2D.Dynamics.b2FixtureDef();
@@ -67,7 +68,7 @@ var Models;
                     display.anchorOffsetY = height / 2;
                     display.x = x;
                     display.y = y;
-                    body.userData = [display];
+                    body.userData = new Models.UserData([display], Models.UserData.TYPE.MOVE_MAP, pos);
                     this.addChild(display);
                     Common.B2Box.world.CreateBody(body).CreateFixture(fixDef);
                 };
@@ -78,3 +79,4 @@ var Models;
         })(Bricks = Map.Bricks || (Map.Bricks = {}));
     })(Map = Models.Map || (Models.Map = {}));
 })(Models || (Models = {}));
+//# sourceMappingURL=Brick.js.map

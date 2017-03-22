@@ -64,3 +64,4 @@ var Views;
     Views.ControlPanel = ControlPanel;
     __reflect(ControlPanel.prototype, "Views.ControlPanel");
 })(Views || (Views = {}));
+//# sourceMappingURL=ControlPanel.js.map

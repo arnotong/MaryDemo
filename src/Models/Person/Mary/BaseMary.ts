@@ -19,6 +19,7 @@ module Models.Person.Mary {
         protected boxBody:Box2D.Dynamics.b2BodyDef = new Box2D.Dynamics.b2BodyDef()
         protected boxFixDef:Box2D.Dynamics.b2FixtureDef = new Box2D.Dynamics.b2FixtureDef()
         protected parcelBody:Box2D.Dynamics.b2Body = null
+        protected parcelPos:Box2D.Common.Math.b2Vec2 = new Box2D.Common.Math.b2Vec2(0, 0)
 
         public constructor() {
             super()
@@ -42,7 +43,8 @@ module Models.Person.Mary {
          * 获取 positon
          */
         public getPos():Box2D.Common.Math.b2Vec2 {
-            return this.parcelBody.GetPosition()
+            // return this.parcelBody.GetPosition()
+            return this.parcelPos
         }
 
         /**
@@ -64,11 +66,14 @@ module Models.Person.Mary {
          * 初始化 b2BodyDef 和 b2FixtureDef
          */
         private initBodyFix():void {
-            this.boxBody.userData = [this]
+            let pos = new Box2D.Common.Math.b2Vec2(Common.B2Box.converNum(egret.MainContext.instance.stage.stageWidth / 2), Common.B2Box.converNum(Common.B2Box.planeHeight()))
+
+            this.boxBody.userData = new Models.UserData([this], Models.UserData.TYPE.PERSON, pos)
+
             this.boxBody.type = Box2D.Dynamics.b2Body.b2_dynamicBody
             this.boxBody.fixedRotation = true
-            this.boxBody.position.Set(Common.B2Box.converNum(this.width), Common.B2Box.converNum(Common.B2Box.planeHeight()))
-            
+            this.boxBody.position.Set(pos.x, pos.y)
+
             this.boxFixDef.density = 50
             this.boxFixDef.friction = 80
             this.boxFixDef.restitution = 0
@@ -166,8 +171,9 @@ module Models.Person.Mary {
             //     this.parcelBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(10, 0))
             // }
 
-            this.parcelBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(-this.leftSpeed.getSpeed(), 0))
+            // this.parcelBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(-this.leftSpeed.getSpeed(), 0))
 
+            this.parcelPos.x += Common.B2Box.converNum(this.leftSpeed.getSpeed())
 
              // this.x -= this.leftSpeed.getSpeed()
             this.gotoAndPlay()
@@ -179,7 +185,8 @@ module Models.Person.Mary {
         public right(event?:egret.Event) {
             this.setRightMovieClip()
 
-            this.parcelBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(this.rightSpeed.getSpeed(), 0))
+            // this.parcelBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(this.rightSpeed.getSpeed(), 0))
+            this.parcelPos.x -= Common.B2Box.converNum(this.leftSpeed.getSpeed())
 
             this.gotoAndPlay()
         }

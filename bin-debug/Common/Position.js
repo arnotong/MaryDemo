@@ -15,3 +15,4 @@ var Common;
     Common.Position = Position;
     __reflect(Position.prototype, "Common.Position");
 })(Common || (Common = {}));
+//# sourceMappingURL=Position.js.map

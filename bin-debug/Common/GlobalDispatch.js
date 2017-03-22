@@ -18,3 +18,4 @@ var Common;
     Common.GlobalDispatch = GlobalDispatch;
     __reflect(GlobalDispatch.prototype, "Common.GlobalDispatch");
 })(Common || (Common = {}));
+//# sourceMappingURL=GlobalDispatch.js.map

@@ -9,7 +9,7 @@ var game_file_list = [
 	"libs/modules/eui/eui.js",
 	"libs/physics/Box2D.min.js",
 	"bin-debug/Models/Person/Mary/BaseMary.js",
-	"bin-debug/Controller/PersonControll.js",
+	"bin-debug/LoadingUI.js",
 	"bin-debug/Common/B2Box.js",
 	"bin-debug/Common/BaseEvent.js",
 	"bin-debug/Common/BaseTick.js",
@@ -19,8 +19,8 @@ var game_file_list = [
 	"bin-debug/Common/Position.js",
 	"bin-debug/Common/TextureBitmap.js",
 	"bin-debug/Common/ThemeAdapter.js",
+	"bin-debug/Controller/PersonControll.js",
 	"bin-debug/Common/AssetAdapter.js",
-	"bin-debug/LoadingUI.js",
 	"bin-debug/Main.js",
 	"bin-debug/Models/Map/Brick/Brick.js",
 	"bin-debug/Models/Map/IMap.js",
@@ -30,6 +30,7 @@ var game_file_list = [
 	"bin-debug/Models/Person/Mary/IMary.js",
 	"bin-debug/Models/Person/Mary/MarySpeed.js",
 	"bin-debug/Models/Person/PersonKernel.js",
+	"bin-debug/Models/UserData.js",
 	"bin-debug/Views/ControlPanel.js",
 	//----auto game_file_list end----
 ];

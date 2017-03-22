@@ -4,11 +4,11 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 var Controller;
 (function (Controller) {
     var PersonControll = (function () {
-        function PersonControll(person, map) {
+        function PersonControll(person, map, assembly) {
             this.dispatchEvent = new egret.EventDispatcher();
             this.person = null;
             this.map = null;
-            this.personOldPos = null;
+            this.assembly = null;
             // 事件列表
             this.listenerEventTable = [
                 { event: Common.BaseEvent.DIR_LEFT, handle: this.walkLeft },
@@ -32,7 +32,7 @@ var Controller;
             this.count = 0;
             this.person = person;
             this.map = map;
-            this.personOldPos = this.person.getPos();
+            this.assembly = assembly;
             this.listenerEvent();
         }
         PersonControll.prototype.listenerEvent = function () {
@@ -90,25 +90,25 @@ var Controller;
          * 根据 人物 移动来移动地图
          */
         PersonControll.prototype.moveMapForPerson = function () {
-            var pos = this.person.getPos();
             this.moveStaticBody(Common.B2Box.world.GetBodyList(), this.person.getPos());
-            console.log(this.person.getPos());
-            this.personOldPos = this.person.getPos();
-            this.count = 0;
+            // let x = pos.x
+            // let y = egret.MainContext.instance.stage.x
+            // egret.MainContext.instance.stage.x = -pos.x
         };
         /**
          * 移动 地图 上 所有静态 物品
          */
         PersonControll.prototype.moveStaticBody = function (body, personPos) {
             if (body) {
-                if (body.GetPosition && body.GetType() === Box2D.Dynamics.b2Body.b2_staticBody) {
-                    var bodyPos = body.GetPosition();
-                    bodyPos.x -= personPos.x - this.personOldPos.x;
-                    console.log(personPos.x - this.personOldPos.x);
-                    if (this.count == 0)
-                        console.log(bodyPos);
-                    this.count++;
-                    body.SetPosition(bodyPos);
+                if (body.GetPosition) {
+                    var userData = (body.GetUserData() || new Models.UserData());
+                    console.log(userData.getType());
+                    if (userData.isType(Models.UserData.TYPE.MOVE_MAP)) {
+                        var pos = userData.getPos();
+                        var bodyPos = body.GetPosition();
+                        bodyPos.x = pos.x + personPos.x;
+                        body.SetPosition(bodyPos);
+                    }
                 }
                 this.moveStaticBody(body.GetNext(), personPos);
             }
@@ -118,3 +118,4 @@ var Controller;
     Controller.PersonControll = PersonControll;
     __reflect(PersonControll.prototype, "Controller.PersonControll");
 })(Controller || (Controller = {}));
+//# sourceMappingURL=PersonControll.js.map

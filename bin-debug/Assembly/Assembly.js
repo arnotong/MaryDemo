@@ -13,7 +13,7 @@ var Assembly = (function (_super) {
         _this.map = null;
         _this.person = null;
         _this.control = null;
-        _this.isDebug = false;
+        _this.isDebug = !1;
         _this.init();
         return _this;
     }
@@ -31,8 +31,8 @@ var Assembly = (function (_super) {
             if (body.GetPosition) {
                 var pos_1 = body.GetPosition();
                 var angle_1 = body.GetAngle();
-                var userData = body.GetUserData() || [];
-                userData.forEach(function (display) {
+                var userData = (body.GetUserData() || new Models.UserData());
+                userData.getDisplays().forEach(function (display) {
                     display.x = pos_1.x * 30;
                     display.y = pos_1.y * 30;
                     display.rotation = Math.round(angle_1 * 180 / Math.PI);
@@ -74,8 +74,9 @@ var Assembly = (function (_super) {
         this.addChild(this.control);
     };
     Assembly.prototype.registerController = function () {
-        new Controller.PersonControll(this.person, this.map);
+        new Controller.PersonControll(this.person, this.map, this);
     };
     return Assembly;
 }(egret.Sprite));
 __reflect(Assembly.prototype, "Assembly");
+//# sourceMappingURL=Assembly.js.map

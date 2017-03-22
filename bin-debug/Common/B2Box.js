@@ -50,3 +50,4 @@ var Common;
     Common.B2Box = B2Box;
     __reflect(B2Box.prototype, "Common.B2Box");
 })(Common || (Common = {}));
+//# sourceMappingURL=B2Box.js.map

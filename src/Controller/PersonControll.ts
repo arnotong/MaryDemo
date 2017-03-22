@@ -4,9 +4,8 @@ namespace Controller {
 
         private person:Models.Person.PersonKernel = null
         private map:Models.Map.MapKernel = null
+        private assembly:Assembly = null
         
-        private personOldPos:Box2D.Common.Math.b2Vec2 = null
-
         // 事件列表
         private listenerEventTable = [
             {event: Common.BaseEvent.DIR_LEFT, handle: this.walkLeft},
@@ -30,11 +29,10 @@ namespace Controller {
             down: new Common.BaseTick()
         }
 
-        constructor (person:Models.Person.PersonKernel, map:Models.Map.MapKernel) {
+        constructor (person:Models.Person.PersonKernel, map:Models.Map.MapKernel, assembly:Assembly) {
             this.person = person
             this.map = map
-
-            this.personOldPos = this.person.getPos()
+            this.assembly = assembly
             
             this.listenerEvent()
         }
@@ -110,14 +108,12 @@ namespace Controller {
          * 根据 人物 移动来移动地图
          */
         private moveMapForPerson():void {
-            let pos:Common.Position = this.person.getPos()
 
             this.moveStaticBody(Common.B2Box.world.GetBodyList(), this.person.getPos())
-
-            console.log(this.person.getPos())
-
-            this.personOldPos = this.person.getPos()
-            this.count = 0
+            
+            // let x = pos.x
+            // let y = egret.MainContext.instance.stage.x
+            // egret.MainContext.instance.stage.x = -pos.x
         }
 
         private count = 0
@@ -127,17 +123,17 @@ namespace Controller {
          */
         private moveStaticBody(body:Box2D.Dynamics.b2Body, personPos:Common.Position):void {
             if (body) {
-                if(body.GetPosition && body.GetType() === Box2D.Dynamics.b2Body.b2_staticBody) {
-                    let bodyPos = body.GetPosition()
-                    bodyPos.x -= personPos.x - this.personOldPos.x
-                    console.log(personPos.x - this.personOldPos.x)
-                    
-                    if (this.count == 0)
-                        console.log(bodyPos)
+                if(body.GetPosition) {
+                    let userData = <Models.UserData> (body.GetUserData() || new Models.UserData())
+                    console.log(userData.getType())
+                    if (userData.isType(Models.UserData.TYPE.MOVE_MAP)) {
+                        let pos = userData.getPos()
 
-                    this.count ++
+                        let bodyPos = body.GetPosition()
+                        bodyPos.x =  pos.x + personPos.x
 
-                    body.SetPosition(bodyPos)
+                        body.SetPosition(bodyPos)
+                    }
                 }
 
                 this.moveStaticBody(body.GetNext(), personPos)

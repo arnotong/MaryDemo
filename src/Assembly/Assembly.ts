@@ -3,7 +3,7 @@ class Assembly extends egret.Sprite {
     private person:Models.Person.PersonKernel = null
     private control:Views.ControlPanel = null
     
-    private isDebug:boolean = false
+    private isDebug:boolean = !1
 
     public constructor() {
         super()
@@ -26,9 +26,9 @@ class Assembly extends egret.Sprite {
             if (body.GetPosition) {
                 let pos = body.GetPosition()
                 let angle = body.GetAngle()
-
-                let userData = body.GetUserData() || []
-                userData.forEach(display => {
+                let userData = <Models.UserData> (body.GetUserData() || new Models.UserData())
+                
+                userData.getDisplays().forEach(display => {
                     display.x = pos.x * 30
                     display.y = pos.y * 30
                     display.rotation = Math.round(angle * 180 / Math.PI)
@@ -80,6 +80,6 @@ class Assembly extends egret.Sprite {
     }
 
     private registerController():void {
-        new Controller.PersonControll(this.person, this.map)
+        new Controller.PersonControll(this.person, this.map, this)
     }
 }

@@ -82,3 +82,4 @@ var Models;
         __reflect(PersonKernel.prototype, "Models.Person.PersonKernel");
     })(Person = Models.Person || (Models.Person = {}));
 })(Models || (Models = {}));
+//# sourceMappingURL=PersonKernel.js.map

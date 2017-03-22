@@ -9,9 +9,9 @@ var Models;
         (function (Mary) {
             var MarySpeed = (function () {
                 function MarySpeed(min, max, acc) {
-                    this.min = 1.0;
-                    this.max = 6.0;
-                    this.acc = 1.0;
+                    this.min = 0.2;
+                    this.max = 1.0;
+                    this.acc = .4;
                     this.speed = 0;
                     this.setSpeedData(min, max, acc);
                 }
@@ -55,3 +55,4 @@ var Models;
         })(Mary = Person.Mary || (Person.Mary = {}));
     })(Person = Models.Person || (Models.Person = {}));
 })(Models || (Models = {}));
+//# sourceMappingURL=MarySpeed.js.map

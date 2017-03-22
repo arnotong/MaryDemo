@@ -35,3 +35,4 @@ var Common;
     Common.BaseTick = BaseTick;
     __reflect(BaseTick.prototype, "Common.BaseTick");
 })(Common || (Common = {}));
+//# sourceMappingURL=BaseTick.js.map

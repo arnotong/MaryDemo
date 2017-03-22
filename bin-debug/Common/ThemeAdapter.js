@@ -59,3 +59,4 @@ var Common;
     Common.ThemeAdapter = ThemeAdapter;
     __reflect(ThemeAdapter.prototype, "Common.ThemeAdapter", ["eui.IThemeAdapter"]);
 })(Common || (Common = {}));
+//# sourceMappingURL=ThemeAdapter.js.map
